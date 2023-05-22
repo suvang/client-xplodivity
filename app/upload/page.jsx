@@ -34,9 +34,14 @@ const Upload = () => {
   console.log("articleFormValues", articleFormValues);
 
   const handleOverviewDetails = (e) => {
+    let formValues =
+      active.text === "Article" ? articleFormValues : videoFormValues;
+    let setFormValues =
+      active.text === "Article" ? setArticleFormValues : setVideoFormValues;
+
     if (e.target.name === "tags") {
-      setArticleFormValues({
-        ...articleFormValues,
+      setFormValues({
+        ...formValues,
         [e.target.name]: e.target.value.split(","),
       });
     } else if (e.target.name === "coverImage") {
@@ -44,24 +49,24 @@ const Upload = () => {
       Object.assign(tempFileObj, {
         urlString: URL.createObjectURL(e.target.files[0]),
       });
-      setArticleFormValues({
-        ...articleFormValues,
+      setFormValues({
+        ...formValues,
         ["coverImage"]: tempFileObj,
       });
     } else if (e.target.name === "subFiles") {
-      const tempArticleFormValues = { ...articleFormValues };
+      const tempFormValues = { ...formValues };
       const tempFileObj = e.target.files[0];
       const type = tempFileObj.type.split("/")[1];
       Object.assign(tempFileObj, {
         urlString: URL.createObjectURL(e.target.files[0]),
         customName: `${new Date().toISOString().replace(/:/g, "-")}.${type}`,
       });
-      tempArticleFormValues.subFiles.push(tempFileObj);
-      setArticleFormValues(tempArticleFormValues);
+      tempFormValues.subFiles.push(tempFileObj);
+      setFormValues(tempFormValues);
       e.target.value = null;
     } else {
-      setArticleFormValues({
-        ...articleFormValues,
+      setFormValues({
+        ...formValues,
         [e.target.name]: e.target.value,
       });
     }
@@ -76,7 +81,7 @@ const Upload = () => {
   const handleSubmit = async () => {
     const formData = new FormData();
 
-    if (storyTypeSelected === "video") {
+    if (active.text === "Video") {
       formData.append("videoId", `${videoFormValues.videoId}`);
 
       for (let i = 0; i < videoFormValues.subFiles.length; i++) {
@@ -158,9 +163,21 @@ const Upload = () => {
         {active.text === "Video" ? (
           <div>
             <p>Content details</p>
-            <TextInput label="videoId" name="videoId" />
-            <TextInput label="Category type" name="categoryType" />
-            <TextInput label="Popular" name="popular" />
+            <TextInput
+              label="videoId"
+              name="videoId"
+              onChange={handleOverviewDetails}
+            />
+            <TextInput
+              label="Category type"
+              name="categoryType"
+              onChange={handleOverviewDetails}
+            />
+            <TextInput
+              label="Popular"
+              name="popular"
+              onChange={handleOverviewDetails}
+            />
             <TextInput
               label="Add Story Tags"
               name="tags"
@@ -194,6 +211,7 @@ const Upload = () => {
                 className="textarea textarea-bordered h-24"
                 placeholder="Bio"
                 name="description"
+                onChange={handleOverviewDetails}
               ></textarea>
             </div>
           </div>
