@@ -2,30 +2,42 @@
 
 import { useGetAllCategoriesQuery } from "@app/store/services/allcategories";
 import Card from "@components/Card";
+import Pagination from "@components/Pagination";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 const Explore = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const {
     data = [],
     error,
     isLoading,
   } = useGetAllCategoriesQuery({
     query: "",
-    page: 1,
+    page: currentPage,
     filter: "",
     type: "allcategory",
   });
-  console.log("data", data);
 
   return (
-    <div className="grid grid-cols-4 gap-4">
-      {!isLoading &&
-        data?.data?.map((item) => (
-          <Link href={`/explore/${item.topicName}`}>
-            <Card image={item.image} title={item.topicName} tags={item.tags} />
-          </Link>
-        ))}
+    <div className="flex-center flex-col gap-10">
+      <div className="grid grid-cols-4 gap-4">
+        {!isLoading &&
+          data?.data?.map((item) => (
+            <Link href={`/explore/${item.blogUrl}`}>
+              <Card
+                image={item.image}
+                title={item.topicName}
+                tags={item.tags}
+              />
+            </Link>
+          ))}
+      </div>
+      <Pagination
+        totalPages={data.totalPages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 };

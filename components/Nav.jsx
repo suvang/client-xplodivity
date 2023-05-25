@@ -14,9 +14,19 @@ const Nav = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginView, setIsLoginView] = useState(true);
+  const [searchTerm, setSearchTerm] = useState({
+    topicName: "",
+    page: 1,
+  });
   useGetCurrentUserDetailsQuery();
   const user = useSelector((state) => state.user.currentUser);
+
   console.log("userdata", user);
+
+  const handleSearch = (e) => {
+    setSearchTerm({ ...searchTerm, [e.target.name]: e.target.value });
+  };
+  console.log("search", searchTerm);
 
   return (
     <nav className="flex-between w-full mb-16 pt-3">
@@ -49,7 +59,12 @@ const Nav = () => {
         <Link href="/courses" className=" text-custom-text">
           Courses
         </Link>
-        <SearchBar />
+        <SearchBar
+          setSearchTerm={setSearchTerm}
+          searchTerm={searchTerm}
+          onChange={handleSearch}
+          name="topicName"
+        />
         {!user && (
           <label
             onClick={() => setIsModalOpen(true)}

@@ -8,7 +8,12 @@ export const allcategoriesApi = api.injectEndpoints({
       query: ({ query, page, filter, type }) => {
         return {
           url: "/allcategories",
-          params: { query, page, filter, type },
+          params: {
+            topicName: query === "" ? undefined : query,
+            page,
+            filter,
+            type,
+          },
         };
       },
     }),
@@ -27,5 +32,8 @@ export const allcategoriesApi = api.injectEndpoints({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAllCategoriesQuery, useAddCategoryMutation } =
-  allcategoriesApi;
+export const {
+  useGetAllCategoriesQuery,
+  useGetCategoryQuery,
+  useAddCategoryMutation,
+} = allcategoriesApi;

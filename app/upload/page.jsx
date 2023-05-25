@@ -1,5 +1,6 @@
 "use client";
 
+import Mdxtest from "@app/explore/[...topic]/mdxtest";
 import { useAddCategoryMutation } from "@app/store/services/allcategories";
 import TextInput from "@components/TextInput";
 import React, { useRef, useState } from "react";
@@ -19,6 +20,8 @@ const Upload = () => {
     popular: false,
     description: "",
     subFiles: [],
+    blogUrl: "",
+    headings: [],
   });
   const [videoFormValues, setVideoFormValues] = useState({
     categoryType: "video",
@@ -27,19 +30,27 @@ const Upload = () => {
     popular: false,
     description: "",
     subFiles: [],
+    blogUrl: "",
+    headings: [],
   });
+  const [headings, setHeadings] = useState("");
   const folderId = useRef(new Date().toISOString().replace(/:/g, "-"));
   const [addCategory] = useAddCategoryMutation();
+  let formValues =
+    active.text === "Article" ? articleFormValues : videoFormValues;
+  let setFormValues =
+    active.text === "Article" ? setArticleFormValues : setVideoFormValues;
 
   console.log("articleFormValues", articleFormValues);
+  console.log("videoFormValues", videoFormValues);
 
   const handleOverviewDetails = (e) => {
-    let formValues =
-      active.text === "Article" ? articleFormValues : videoFormValues;
-    let setFormValues =
-      active.text === "Article" ? setArticleFormValues : setVideoFormValues;
-
-    if (e.target.name === "tags") {
+    if (e === "headings") {
+      console.log(" headings.target.value", headings.target.value);
+      const tempObj = { ...formValues };
+      tempObj.headings.push(headings.target.value);
+      setFormValues(tempObj);
+    } else if (e.target.name === "tags") {
       setFormValues({
         ...formValues,
         [e.target.name]: e.target.value.split(","),
@@ -183,6 +194,28 @@ const Upload = () => {
               name="tags"
               onChange={handleOverviewDetails}
             />
+            <TextInput
+              label="Blog url"
+              name="blogUrl"
+              onChange={handleOverviewDetails}
+            />
+            <div>
+              <TextInput
+                label="headings"
+                name="headings"
+                onChange={setHeadings}
+              />
+              <button
+                className="btn btn-accent"
+                onClick={() => handleOverviewDetails("headings")}
+              >
+                ADD HEADING
+              </button>
+              {videoFormValues.headings.map((item) => {
+                return <p>{item}</p>;
+              })}
+            </div>
+
             <div className="form-control w-full max-w-xs">
               <label className="label">
                 <span className="label-text">Description image</span>
@@ -239,6 +272,27 @@ const Upload = () => {
                 name="popular"
                 onChange={handleOverviewDetails}
               />
+              <TextInput
+                label="Blog url"
+                name="blogUrl"
+                onChange={handleOverviewDetails}
+              />
+              <div>
+                <TextInput
+                  label="headings"
+                  name="headings"
+                  onChange={setHeadings}
+                />
+                <button
+                  className="btn btn-accent"
+                  onClick={() => handleOverviewDetails("headings")}
+                >
+                  ADD HEADING
+                </button>
+                {articleFormValues.headings.map((item) => {
+                  return <p>{item}</p>;
+                })}
+              </div>
               <div className="form-control w-full max-w-xs">
                 <label className="label">
                   <span className="label-text">Add cover image</span>
@@ -303,6 +357,10 @@ const Upload = () => {
             </div>
           </>
         )}
+
+        <article className="prose prose-DEFAULT">
+          <Mdxtest source={formValues.description} />
+        </article>
 
         <button className="btn btn-accent" onClick={handleSubmit}>
           SUBMIT
