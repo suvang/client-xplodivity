@@ -14,7 +14,7 @@ const Pricing = () => {
         </p>
       </div>
 
-      <div className="w-full flex-center gap-10 ">
+      <div className="w-full flex-center gap-10 max-md:flex-col max-[400px]:w-11/12">
         <PricingCard />
         <PricingCard />
       </div>

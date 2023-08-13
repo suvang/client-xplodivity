@@ -19,6 +19,26 @@ const Home = () => {
         </p>
       </div>
 
+      <div className={styles.blobShape}>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill="#139dff"
+            d="M39.1,-27C45.7,-11.2,42.5,5.8,34.4,18C26.3,30.2,13.1,37.6,-7.2,41.8C-27.5,45.9,-55.1,46.8,-64.7,33.7C-74.3,20.7,-66.1,-6.4,-52.3,-26.4C-38.5,-46.4,-19.3,-59.3,-1.5,-58.5C16.3,-57.6,32.5,-42.9,39.1,-27Z"
+            transform="translate(100 100)"
+          />
+        </svg>
+      </div>
+
+      <div className={styles.blobTwoShape}>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill="#139dff"
+            d="M59.5,-38.8C67.1,-21.3,56.2,2.4,43.2,23.1C30.2,43.9,15.1,61.6,-0.3,61.8C-15.7,62,-31.4,44.6,-42,25.3C-52.6,5.9,-58.1,-15.4,-50.3,-33.1C-42.4,-50.8,-21.2,-64.9,2.4,-66.3C26,-67.6,52,-56.3,59.5,-38.8Z"
+            transform="translate(100 100)"
+          />
+        </svg>
+      </div>
+
       <div className="flex gap-5">
         <Link href="/explore">
           <div className="mockup-code bg-indigo-700  ">

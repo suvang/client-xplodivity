@@ -11,6 +11,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      spacing: {
+        128: "32rem",
+      },
       typography: ({ theme }) => ({
         DEFAULT: {
           css: {
@@ -26,14 +29,21 @@ module.exports = {
         },
       }),
       fontFamily: {
-        satoshi: ["Satoshi", "sans-serif"],
-        inter: ["Inter", "sans-serif"],
+        // satoshi: ["Satoshi", "sans-serif"],
+        // inter: ["Inter", "sans-serif"],
+        // kalam: ["var(--font-kalam)"],
       },
       colors: {
-        "custom-background": "#161616",
+        "custom-background": "#121521",
         "custom-text": "#FFF",
-        "custom-button-bg": "deeppink",
+        "custom-button-bg": "#139dff",
+        "custom-card-bg": "#1F2437",
       },
+    },
+    fontFamily: {
+      // satoshi: ["Satoshi", "sans-serif"],
+      // inter: ["Inter", "sans-serif"],
+      // sans: ["var(--font-inter)"],
     },
   },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],

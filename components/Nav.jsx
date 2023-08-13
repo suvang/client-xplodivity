@@ -9,6 +9,8 @@ import Login from "./Auth/Login";
 import Signup from "./Auth/SignUp";
 import { useGetCurrentUserDetailsQuery } from "@app/store/services/user";
 import { useSelector } from "react-redux";
+import { FaSearch } from "react-icons/fa";
+import { usePathname } from "next/navigation";
 
 const Nav = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
@@ -18,6 +20,7 @@ const Nav = () => {
     topicName: "",
     page: 1,
   });
+  const pathname = usePathname();
   useGetCurrentUserDetailsQuery();
   const user = useSelector((state) => state.user.currentUser);
 
@@ -26,10 +29,10 @@ const Nav = () => {
   const handleSearch = (e) => {
     setSearchTerm({ ...searchTerm, [e.target.name]: e.target.value });
   };
-  console.log("search", searchTerm);
+  console.log("pathname", pathname);
 
   return (
-    <nav className="flex-between w-full mb-16 pt-3">
+    <nav className="flex-between w-full mb-16 pt-2 pb-2 sm:px-12 px-2 bg-custom-background border-b border-[#272934]">
       <Link href="/" className="flex gap-2 flex-center">
         <Image
           src="/assets/images/logo.jpeg"
@@ -41,35 +44,72 @@ const Nav = () => {
       </Link>
 
       {/* Desktop Navigation */}
-      <div className="flex flex-center gap-5 ">
+      <div className="flex flex-center gap-5 max-sm:gap-3">
         {user?.admin && (
-          <Link href="/upload" className="text-custom-text whitespace-nowrap ">
+          <Link
+            href="/upload"
+            className="text-custom-text whitespace-nowrap font-medium"
+          >
             UPLOAD
           </Link>
         )}
         <Link
           href="/pricing"
-          className="text-custom-text font-bold whitespace-nowrap "
+          className={`max-lg:text-sm max-sm:text-xs text-custom-text font-bold whitespace-nowrap bg-custom-button-bg py-1 px-2 rounded ${
+            pathname === "/pricing" && "underline underline-offset-4"
+          }`}
         >
-          PREMIUM ACCESS
+          PREMIUM
         </Link>
-        <Link href="/explore" className="text-custom-text ">
-          Explore
+        <Link
+          href="/explore"
+          className={`max-lg:text-sm max-sm:text-xs text-custom-text font-medium ${
+            pathname === "/explore" && "underline underline-offset-4"
+          }`}
+        >
+          EXPLORE
         </Link>
-        <Link href="/courses" className=" text-custom-text">
-          Courses
+        <Link
+          href="/courses"
+          className={`max-lg:text-sm max-sm:text-xs text-custom-text font-medium ${
+            pathname === "/courses" && "underline underline-offset-4"
+          }`}
+        >
+          COURSES
         </Link>
-        <SearchBar
-          setSearchTerm={setSearchTerm}
-          searchTerm={searchTerm}
-          onChange={handleSearch}
-          name="topicName"
-        />
+
+        {pathname === "/pricing" || pathname === "/" ? null : (
+          <>
+            <SearchBar
+              setSearchTerm={setSearchTerm}
+              searchTerm={searchTerm}
+              onChange={handleSearch}
+              name="topicName"
+              className="max-[900px]:hidden"
+            />
+
+            <label htmlFor="my-modal-search" className="min-[900px]:hidden ">
+              <FaSearch />
+            </label>
+          </>
+        )}
+
+        {pathname !== "/pricing" && (
+          <Modal htmlFor="my-modal-search">
+            <SearchBar
+              setSearchTerm={setSearchTerm}
+              searchTerm={searchTerm}
+              onChange={handleSearch}
+              name="topicName"
+            />
+          </Modal>
+        )}
+
         {!user && (
           <label
             onClick={() => setIsModalOpen(true)}
             htmlFor="my-modal-3"
-            className="w-full custom_btn text-custom-text"
+            className="max-lg:text-sm max-sm:text-xs max-sm:py-2 max-sm:px-2 w-full custom_btn text-custom-text"
           >
             LOGIN
           </label>
@@ -82,7 +122,7 @@ const Nav = () => {
               alt="logo"
               width={30}
               height={30}
-              className="object-contain"
+              className="object-contain border border-custom-button-bg"
             />
             <p>xplodivity</p>
           </Link>
@@ -92,46 +132,18 @@ const Nav = () => {
       {isModalOpen && (
         <Modal>
           {isLoginView ? (
-            <Login setIsLoginView={setIsLoginView} />
+            <Login
+              setIsLoginView={setIsLoginView}
+              setIsModalOpen={setIsModalOpen}
+            />
           ) : (
-            <Signup setIsLoginView={setIsLoginView} />
+            <Signup
+              setIsLoginView={setIsLoginView}
+              setIsModalOpen={setIsModalOpen}
+            />
           )}
         </Modal>
       )}
-
-      {/* Mobile Navigation */}
-      <div className="sm:hidden flex relative">
-        <div className="flex">
-          {toggleDropdown && (
-            <div className="dropdown">
-              <Link
-                href="/profile"
-                className="dropdown_link"
-                onClick={() => setToggleDropdown(false)}
-              >
-                My Profile
-              </Link>
-              <Link
-                href="/create-prompt"
-                className="dropdown_link"
-                onClick={() => setToggleDropdown(false)}
-              >
-                Create Prompt
-              </Link>
-              <button
-                type="button"
-                onClick={() => {
-                  setToggleDropdown(false);
-                  signOut();
-                }}
-                className="outline_btn"
-              >
-                Sign Out
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
     </nav>
   );
 };

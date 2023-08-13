@@ -2,7 +2,7 @@ import React from "react";
 
 const PricingCard = () => {
   return (
-    <div className="card w-96 bg-base-100 shadow-xl">
+    <div className="flex flex-col items-center justify-center bg-custom-card-bg rounded-xl shadow-xl p-6 w-full md:w-1/3 m-2 max-w-md">
       <div className="card-body flex-center gap-5">
         <h1 className="card-title text-3xl">
           $29/Month

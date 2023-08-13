@@ -5,7 +5,7 @@ import TextInput from "@components/TextInput";
 import React, { useState } from "react";
 import ForgotPassword from "./ForgotPassword";
 
-const Login = ({ setIsLoginView }) => {
+const Login = ({ setIsLoginView, setIsModalOpen }) => {
   const [login] = useLoginUserMutation();
   const [value, setValue] = useState({
     Email: "",
@@ -31,6 +31,7 @@ const Login = ({ setIsLoginView }) => {
       };
 
       const res = await login(data).unwrap();
+      setIsModalOpen(false);
 
       if (!res.success) {
         if (!res.userExist) {
@@ -53,7 +54,7 @@ const Login = ({ setIsLoginView }) => {
   }
 
   return (
-    <div className="flex-center flex-col gap-5">
+    <div className="flex-center flex-col gap-5 ">
       <TextInput
         label="Email"
         name="Email"

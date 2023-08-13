@@ -1,7 +1,7 @@
 "use client";
 
 import { useGetAllCategoriesQuery } from "@app/store/services/allcategories";
-import Card from "@components/Card";
+import Card from "@components/Card/Card";
 import Link from "next/link";
 import React from "react";
 

@@ -93,7 +93,7 @@ export const deleteProfile = createAsyncThunk("deleteProfile", async () =>
 
 const fulfilledState = async (state, action, isLocalstorage = true) => {
   state.loading = false;
-  state.currentUser = action?.payload?.user;
+  state.currentUser = action?.payload?.data;
   state.error = "";
   if (action?.payload?.success && isLocalstorage) {
     const item = {

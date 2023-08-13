@@ -1,20 +1,20 @@
 "use client";
 import { useRouter } from "next/navigation";
 
-const SearchBar = ({ onChange, name, searchTerm }) => {
+const SearchBar = ({ onChange, name, searchTerm, className }) => {
   const router = useRouter();
   return (
-    <div className="form-control">
+    <div className={`form-control ${className}`}>
       <div className="input-group">
         <input
           type="text"
           placeholder="Search…"
-          className="input input-bordered"
+          className="input input-bordered bg-custom-text"
           name={name}
           onChange={onChange}
         />
         <button
-          className="btn btn-square"
+          className="btn btn-square bg-custom-button-bg border-custom-button-bg"
           onClick={() => router.push(`/search/${searchTerm.topicName}`)}
         >
           <svg
@@ -22,7 +22,7 @@ const SearchBar = ({ onChange, name, searchTerm }) => {
             className="h-6 w-6"
             fill="none"
             viewBox="0 0 24 24"
-            stroke="currentColor"
+            stroke="white"
           >
             <path
               strokeLinecap="round"

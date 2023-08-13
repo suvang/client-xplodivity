@@ -9,6 +9,7 @@ hljs.registerLanguage("javascript", javascript);
 const Mdxtest = ({ source }) => {
   useEffect(() => {
     const content = document.getElementById("content");
+    const heading = content.getElementsByTagName("h1");
     //   content.innerHTML = `<h1>hello world</h1>
     //   <pre><code >
     //     //strings
@@ -27,6 +28,8 @@ const Mdxtest = ({ source }) => {
     //   </code></pre>
     // `;
     content.innerHTML = source;
+    Array.from(heading).forEach((h) => (h.style.color = "white"));
+
     hljs.highlightAll();
   }, [source]);
   return <div id="content" />;

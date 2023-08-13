@@ -16,9 +16,27 @@
 }
 
 .customshape1 .shapefill {
-  fill: #e657d6;
+  fill: #139dff;
 }
 
 .height {
   height: 85vh;
+}
+
+.blobShape {
+  position: absolute;
+  height: 500px;
+  width: 500px;
+  left: 50px;
+  z-index: -1;
+  top: 150px;
+}
+
+.blobTwoShape {
+  position: absolute;
+  height: 500px;
+  width: 500px;
+  right: 10px;
+  z-index: -1;
+  top: 150px;
 }

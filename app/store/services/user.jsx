@@ -73,6 +73,56 @@ export const authApi = api.injectEndpoints({
         }
       },
     }),
+    deleteAccount: builder.mutation({
+      query: () => {
+        return {
+          url: "/userDetails/deleteprofile",
+          method: "DELETE",
+        };
+      },
+    }),
+    forgotPasswordEmailLink: builder.mutation({
+      query: ({ email }) => {
+        return {
+          url: "/userdetails/forgot-password",
+          method: "POST",
+          body: { email },
+        };
+      },
+    }),
+    verifyResetPasswordLink: builder.mutation({
+      query: ({ id, token, password }) => {
+        return {
+          url: "/userdetails/reset-password",
+          method: "POST",
+          body: { password },
+          params: {
+            id,
+            token,
+          },
+        };
+      },
+    }),
+    verifyEmail: builder.query({
+      query: ({ id, token }) => {
+        return {
+          url: "/userdetails/verify-email",
+          method: "GET",
+          params: {
+            id,
+            token,
+          },
+        };
+      },
+    }),
+    resendEmailverification: builder.query({
+      query: () => {
+        return {
+          url: "/userdetails/resend-email-verification",
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
@@ -83,4 +133,9 @@ export const {
   useLazyLogoutUserQuery,
   useLoginUserMutation,
   useRegisterUserMutation,
+  useDeleteAccountMutation,
+  useForgotPasswordEmailLinkMutation,
+  useVerifyResetPasswordLinkMutation,
+  useLazyVerifyEmailQuery,
+  useResendEmailverificationQuery,
 } = authApi;
