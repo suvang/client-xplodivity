@@ -1,9 +1,11 @@
 "use client";
 
 import { useLoginUserMutation } from "@app/store/services/user";
+import GoogleAuthButton from "@components/GoogleAuthButton";
 import TextInput from "@components/TextInput";
 import React, { useState } from "react";
 import ForgotPassword from "./ForgotPassword";
+import { signIn } from "next-auth/react";
 
 const Login = ({ setIsLoginView, setIsModalOpen }) => {
   const [login] = useLoginUserMutation();
@@ -55,6 +57,17 @@ const Login = ({ setIsLoginView, setIsModalOpen }) => {
 
   return (
     <div className="flex-center flex-col gap-5 ">
+      <GoogleAuthButton
+        onClick={() => signIn("google")}
+        text="Login with Google"
+      />
+
+      <div className="flex w-full flex-center gap-2">
+        <hr className="w-3/6" />
+        <p className="text-3xl font-semibold">OR</p>
+        <hr className="w-3/6" />
+      </div>
+
       <TextInput
         label="Email"
         name="Email"
@@ -75,7 +88,7 @@ const Login = ({ setIsLoginView, setIsModalOpen }) => {
 
       {error !== "" && error}
 
-      <div onClick={() => setForgotPassword(true)}>Forgotten password?</div>
+      <div onClick={() => setForgotPassword(true)}>Forgot password?</div>
 
       <p onClick={() => setIsLoginView(false)}>
         Dont have an account? Sign up.

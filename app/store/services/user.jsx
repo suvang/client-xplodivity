@@ -50,6 +50,7 @@ export const authApi = api.injectEndpoints({
         url: "/userdetails/currentuser",
         method: "GET",
       }),
+      providesTags: ["User"],
       async onQueryStarted(params, { dispatch, queryFulfilled }) {
         const { data: response } = await queryFulfilled;
         if (response.success) {
@@ -103,19 +104,20 @@ export const authApi = api.injectEndpoints({
         };
       },
     }),
-    verifyEmail: builder.query({
+    verifyEmail: builder.mutation({
       query: ({ id, token }) => {
         return {
           url: "/userdetails/verify-email",
-          method: "GET",
-          params: {
+          method: "PUT",
+          body: {
             id,
             token,
           },
         };
       },
+      invalidatesTags: ["User"],
     }),
-    resendEmailverification: builder.query({
+    resendEmailVerification: builder.query({
       query: () => {
         return {
           url: "/userdetails/resend-email-verification",
@@ -129,13 +131,13 @@ export const authApi = api.injectEndpoints({
 // export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
-  useGetCurrentUserDetailsQuery,
+  useLazyGetCurrentUserDetailsQuery,
   useLazyLogoutUserQuery,
   useLoginUserMutation,
   useRegisterUserMutation,
   useDeleteAccountMutation,
   useForgotPasswordEmailLinkMutation,
   useVerifyResetPasswordLinkMutation,
-  useLazyVerifyEmailQuery,
-  useResendEmailverificationQuery,
+  useVerifyEmailMutation,
+  useLazyResendEmailVerificationQuery,
 } = authApi;

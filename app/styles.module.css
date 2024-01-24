@@ -1,27 +1,28 @@
 .customshape1 {
-  position: absolute;
+  /* position: absolute;
   bottom: 0;
-  left: 0;
+  left: 0; */
   width: 100%;
   overflow: hidden;
   line-height: 0;
   transform: rotate(180deg);
+  z-index: -1;
 }
 
 .customshape1 svg {
   position: relative;
   display: block;
-  width: calc(111% + 1.3px);
-  height: 151px;
+  /* width: calc(111% + 1.3px);
+  height: 280px; */
 }
 
 .customshape1 .shapefill {
   fill: #139dff;
 }
 
-.height {
+/* .height {
   height: 85vh;
-}
+} */
 
 .blobShape {
   position: absolute;

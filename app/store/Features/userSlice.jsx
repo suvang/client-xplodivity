@@ -92,6 +92,7 @@ export const deleteProfile = createAsyncThunk("deleteProfile", async () =>
 );
 
 const fulfilledState = async (state, action, isLocalstorage = true) => {
+  console.log("action?.payload", action?.payload);
   state.loading = false;
   state.currentUser = action?.payload?.data;
   state.error = "";
@@ -119,7 +120,6 @@ const userSlice = createSlice({
       localStorage.removeItem("token");
     },
     setCurrentUser: (state, action) => {
-      console.log("action", action);
       fulfilledState(state, action, true);
     },
   },
@@ -146,6 +146,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setCurrentUser } = userSlice.actions;
+export const { setCurrentUser, updateCurrentUser } = userSlice.actions;
 
 export default userSlice.reducer;

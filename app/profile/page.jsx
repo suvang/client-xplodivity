@@ -1,18 +1,25 @@
 "use client";
 
 import { useSavePostMutation } from "@app/store/services/post";
-import { useLazyLogoutUserQuery } from "@app/store/services/user";
+import {
+  useLazyLogoutUserQuery,
+  useLazyResendEmailVerificationQuery,
+} from "@app/store/services/user";
 import Card from "@components/Card/Card";
 import Modal from "@components/Modal";
 import TextInput from "@components/TextInput";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 
 const Profile = () => {
   const router = useRouter();
+  const [emailSent, setIsEmailSent] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [logout] = useLazyLogoutUserQuery();
+  const [resendEmailVerification] = useLazyResendEmailVerificationQuery();
   const user = useSelector((state) => state.user.currentUser);
   const [savePost] = useSavePostMutation();
 
@@ -21,9 +28,20 @@ const Profile = () => {
     router.push("/explore");
   };
 
+  const handleVerifyEmail = async () => {
+    setLoading(true);
+    const res = await resendEmailVerification().unwrap();
+
+    if (res.emailSent) {
+      setIsEmailSent(true);
+    }
+
+    setLoading(false);
+  };
+
   return (
     <div className="flex-start flex-col gap-12">
-      <div className="flex-start flex-col gap-3">
+      <div className="flex-start flex-col gap-3 ">
         <p>Email: {user?.email}</p>
         <p>Total Posts saved: {user?.savedPosts.length}</p>
         <label
@@ -32,9 +50,22 @@ const Profile = () => {
         >
           EDIT PROFILE
         </label>
-        <button className="btn bg-rose-500 text-custom-text hover:bg-rose-600">
-          VERIFY ACCOUNT
-        </button>
+
+        {!user?.emailVerified && (
+          <>
+            <button
+              onClick={handleVerifyEmail}
+              disabled={loading}
+              className="btn bg-rose-500 text-custom-text hover:bg-rose-600"
+            >
+              VERIFY ACCOUNT
+            </button>
+            {emailSent && (
+              <p>link to verify account has been sent to your email</p>
+            )}
+          </>
+        )}
+
         <button
           onClick={handleLogout}
           className="btn text-custom-text bg-custom-button-bg hover:bg-rose-600"
@@ -61,7 +92,11 @@ const Profile = () => {
         <h1 className="text-3xl">SAVED POSTS</h1>
       </div>
 
-      <div className="grid grid-cols-4 gap-x-4 gap-y-8">
+      <div className="flex flex-wrap justify-center gap-y-4 gap-x-4 ">
+        {user?.savedPosts?.length === 0 && (
+          <p className="text-2xl">You have no saved posts...</p>
+        )}
+
         {user?.savedPosts?.map((item) => (
           <Link href={`/explore/${item?.blogUrl}`}>
             <Card

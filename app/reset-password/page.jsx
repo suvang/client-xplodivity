@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import TextInput from "@components/TextInput";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useVerifyResetPasswordLinkMutation } from "@app/store/services/user";
 
 const ResetPassword = ({ params }) => {
@@ -13,8 +13,9 @@ const ResetPassword = ({ params }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const pathname = usePathname();
   const router = useRouter();
-  const id = params[0];
-  const token = params[1];
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const token = searchParams.get("token");
   const [verifyResetPasswordLink] = useVerifyResetPasswordLinkMutation();
 
   useEffect(() => {
@@ -53,13 +54,11 @@ const ResetPassword = ({ params }) => {
     }
 
     setIsLoading(true);
-    const res = await dispatch(
-      verifyResetPasswordLink({ id, token, password })
-    );
+    const res = await verifyResetPasswordLink({ id, token, password }).unwrap();
 
     setIsLoading(false);
 
-    if (res.payload.reset) {
+    if (res.reset) {
       setShowText(true);
     }
   };
@@ -75,8 +74,8 @@ const ResetPassword = ({ params }) => {
           </p>
         )
       ) : (
-        <>
-          <p>Reset password</p>
+        <div className="flex-col flex-center gap-5">
+          <p className="text-3xl ">Reset password</p>
           <div>
             <p>Password</p>
             <TextInput
@@ -105,12 +104,16 @@ const ResetPassword = ({ params }) => {
               <p>Your passwords do not match</p>
             ))}
           <div>
-            <button onClick={handleResetPassword} className="btn btn-accent">
+            <button
+              onClick={handleResetPassword}
+              disabled={isLoading}
+              className="btn btn-accent mt-5"
+            >
               RESET
             </button>
           </div>
           {showText && <p>Your password has been reset.</p>}
-        </>
+        </div>
       )}
     </div>
   );

@@ -10,7 +10,7 @@ const ForgotPassword = ({ setForgotPassword }) => {
 
   const handleSearch = async () => {
     setIsLoading(true);
-    const res = await forgotPasswordEmailLink({ email: value });
+    const res = await forgotPasswordEmailLink({ email: value }).unwrap();
     setIsLoading(false);
 
     if (res.emailFound) {

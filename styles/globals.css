@@ -15,6 +15,7 @@
 */
 
 .main {
+  position: relative;
   width: 100vw;
   min-height: 100vh;
   position: fixed;
@@ -23,6 +24,13 @@
   /* padding: 120px 16px 160px 16px; */
   padding: 120px 0px 160px 0px;
   pointer-events: none;
+}
+
+.razorpay-container {
+  top: 10vh !important;
+  left: calc(50% - 150px) !important;
+  height: 80vh !important;
+  width: fit-content !important;
 }
 
 @media screen and (max-width: 640px) {
@@ -35,7 +43,7 @@
 
 /* max-w-[95vw] */
 .app {
-  @apply relative z-10 flex justify-center items-center flex-col mx-auto;
+  @apply z-10 flex flex-col min-h-screen;
 }
 
 .custom_btn {

@@ -21,7 +21,7 @@ const getFetchBaseQuery = () => {
 const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery(getFetchBaseQuery()),
-  tagTypes: [],
+  tagTypes: ["User"],
   keepUnusedDataFor: 300, // setting the cache time to 5 minutes for all the endpoints under this base url
   endpoints: () => ({}),
 });
