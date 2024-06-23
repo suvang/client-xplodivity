@@ -1,10 +1,10 @@
 .customshape1 {
-  /* position: absolute;
+  position: absolute;
   bottom: 0;
-  left: 0; */
+  left: 0;
   width: 100%;
-  overflow: hidden;
-  line-height: 0;
+  /* overflow: hidden;
+  line-height: 0; */
   transform: rotate(180deg);
   z-index: -1;
 }

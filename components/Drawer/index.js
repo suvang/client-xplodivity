@@ -1,6 +1,5 @@
 import React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import styles from "./styles.module.css";
 
 const Drawer = ({ navItems }) => {
   return (

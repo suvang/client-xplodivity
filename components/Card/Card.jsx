@@ -51,6 +51,9 @@ const Card = ({ image, title, tags, savePost, id, categoryType }) => {
 
     return save;
   };
+
+  console.log("image", image);
+
   return (
     <div className={`w-[320px] rounded-lg h-80 bg-custom-card-bg `}>
       <Image

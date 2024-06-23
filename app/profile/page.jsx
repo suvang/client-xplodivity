@@ -41,7 +41,7 @@ const Profile = () => {
 
   return (
     <div className="flex-start flex-col gap-12">
-      <div className="flex-start flex-col gap-3 ">
+      <div className="flex-start flex-col gap-3 p-8 pb-2">
         <p>Email: {user?.email}</p>
         <p>Total Posts saved: {user?.savedPosts.length}</p>
         <label
@@ -77,22 +77,27 @@ const Profile = () => {
       <Modal>
         <div className="flex-center flex-col gap-4">
           <h1 className="text-3xl">EDIT PROFILE</h1>
-          <TextInput label="Current password" />
-          <TextInput label="New password" />
-          <button className="btn bg-green-500 hover:bg-green-400 text-custom-text">
-            SAVE
-          </button>
+          {user?.passowrd && (
+            <>
+              <TextInput label="Current password" />
+              <TextInput label="New password" />
+              <button className="btn bg-green-500 hover:bg-green-400 text-custom-text">
+                SAVE
+              </button>
+            </>
+          )}
+
           <button className="btn bg-rose-600 hover:bg-rose-500 text-custom-text">
             DELETE ACCOUNT
           </button>
         </div>
       </Modal>
 
-      <div className="w-full">
-        <h1 className="text-3xl">SAVED POSTS</h1>
-      </div>
+      <div className="flex flex-wrap justify-center gap-y-4 gap-x-4 p-4 pt-0 pb-8">
+        <div className="w-full p-2">
+          <h1 className="text-3xl">SAVED POSTS</h1>
+        </div>
 
-      <div className="flex flex-wrap justify-center gap-y-4 gap-x-4 ">
         {user?.savedPosts?.length === 0 && (
           <p className="text-2xl">You have no saved posts...</p>
         )}

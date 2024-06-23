@@ -1,5 +1,6 @@
 "use client";
 
+import { useGetCoursesQuery } from "@app/store/services/courses";
 import { usePathname, useRouter } from "next/navigation";
 
 let data = [
@@ -86,6 +87,9 @@ let data = [
 ];
 
 const RootLayout = ({ children, params }) => {
+  const { data, error, isLoading } = useGetCoursesQuery({
+    url: "16-js-projects",
+  });
   const router = useRouter();
   const pathname = usePathname();
   const paths = pathname.split("/");
@@ -93,7 +97,7 @@ const RootLayout = ({ children, params }) => {
 
   return (
     <div className="flex grow">
-      <div className="flex flex-col gap-4 w-[400px] bg-custom-background shadow-md shadow-sky-400 text-custom-text">
+      <div className="flex flex-col gap-4 w-[350px] bg-custom-background shadow-md shadow-sky-400 text-custom-text">
         <p className=" text-2xl text-left p-4">
           Build 16 Medium/Hard JavaScript Projects for Frontend Machine coding
           Interview rounds
@@ -110,7 +114,7 @@ const RootLayout = ({ children, params }) => {
 
         <div>
           <p className=" p-2 text-left mt-[5px]">Content list:</p>
-          {data.map((video) => (
+          {data?.courseContent?.map((video) => (
             <div
               onClick={() => router.push(`/courses/16-js-projects/${video.id}`)}
               className={`${

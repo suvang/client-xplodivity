@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import ForgotPassword from "./ForgotPassword";
 import { signIn } from "next-auth/react";
 
-const Login = ({ setIsLoginView, setIsModalOpen }) => {
+const Login = ({}) => {
   const [login] = useLoginUserMutation();
   const [value, setValue] = useState({
     Email: "",
@@ -33,7 +33,7 @@ const Login = ({ setIsLoginView, setIsModalOpen }) => {
       };
 
       const res = await login(data).unwrap();
-      setIsModalOpen(false);
+      // setIsModalOpen(false);
 
       if (!res.success) {
         if (!res.userExist) {
@@ -90,9 +90,7 @@ const Login = ({ setIsLoginView, setIsModalOpen }) => {
 
       <div onClick={() => setForgotPassword(true)}>Forgot password?</div>
 
-      <p onClick={() => setIsLoginView(false)}>
-        Dont have an account? Sign up.
-      </p>
+      <p>Dont have an account? Sign up.</p>
     </div>
   );
 };

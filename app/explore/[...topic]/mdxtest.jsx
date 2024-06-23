@@ -28,7 +28,7 @@ const Mdxtest = ({ source }) => {
     //   </code></pre>
     // `;
     content.innerHTML = source;
-    Array.from(heading).forEach((h) => (h.style.color = "white"));
+    // Array.from(heading).forEach((h) => (h.style.color = "white"));
 
     hljs.highlightAll();
   }, [source]);

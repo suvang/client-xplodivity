@@ -15,7 +15,6 @@ import useIsMobile from "@utils/useIsMobile";
 import NavMobile from "./NavMobile";
 
 const Nav = () => {
-  const [toggleDropdown, setToggleDropdown] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginView, setIsLoginView] = useState(true);
   const [searchTerm, setSearchTerm] = useState({
@@ -61,14 +60,14 @@ const Nav = () => {
               UPLOAD
             </Link>
           )}
-          <Link
+          {/* <Link
             href="/pricing"
             className={`max-lg:text-sm max-sm:text-xs text-custom-text font-bold whitespace-nowrap bg-custom-button-bg py-1 px-2 rounded ${
               pathname === "/pricing" && "underline underline-offset-4"
             }`}
           >
             PREMIUM
-          </Link>
+          </Link> */}
           <Link
             href="/explore"
             className={`max-lg:text-sm max-sm:text-xs text-custom-text font-medium ${
@@ -86,7 +85,7 @@ const Nav = () => {
             COURSES
           </Link>
 
-          {pathname === "/pricing" || pathname === "/" ? null : (
+          {pathname === "/" ? null : (
             <>
               <SearchBar
                 setSearchTerm={setSearchTerm}

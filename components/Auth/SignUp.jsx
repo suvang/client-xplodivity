@@ -4,8 +4,10 @@ import { useRegisterUserMutation } from "@app/store/services/user";
 import TextInput from "@components/TextInput";
 import { validateEmail } from "@utils/validation";
 import React, { useEffect, useState } from "react";
+import GoogleAuthButton from "@components/GoogleAuthButton";
+import { signIn } from "next-auth/react";
 
-const Signup = ({ setIsModalOpen, setIsLoginView }) => {
+const Signup = ({}) => {
   const [value, setValue] = useState({
     fullName: "",
     email: "",
@@ -102,7 +104,7 @@ const Signup = ({ setIsModalOpen, setIsLoginView }) => {
         password: value.password,
       };
       await register(data);
-      setIsModalOpen(false);
+      // setIsModalOpen(false);
     } catch (err) {
       console.log(err);
     }
@@ -112,6 +114,17 @@ const Signup = ({ setIsModalOpen, setIsLoginView }) => {
 
   return (
     <div className="flex-center flex-col gap-5">
+      <GoogleAuthButton
+        onClick={() => signIn("google")}
+        text="Signup with Google"
+      />
+
+      <div className="flex w-full flex-center gap-2">
+        <hr className="w-3/6" />
+        <p className="text-3xl font-semibold">OR</p>
+        <hr className="w-3/6" />
+      </div>
+
       <TextInput
         label="Email"
         name="email"
@@ -137,9 +150,7 @@ const Signup = ({ setIsModalOpen, setIsLoginView }) => {
         SIGN UP
       </button>
 
-      <p onClick={() => setIsLoginView(true)}>
-        Already have an account? Log in
-      </p>
+      <p>Already have an account? Log in</p>
     </div>
   );
 };

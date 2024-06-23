@@ -7,7 +7,9 @@ const getFetchBaseQuery = () => {
   return {
     baseUrl,
     credentials: "include",
+    contentType: "application/json",
     prepareHeaders: (headers) => {
+      headers.set("Accept", "application/json");
       if (token) {
         // include token in req header
         headers.set("Authorization", token);

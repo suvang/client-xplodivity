@@ -17,10 +17,8 @@ const TopicPage = async ({ params }) => {
   const data = await getData(`${params.topic[0]}/${params.topic[1]}`);
   const Category = data.data[0];
 
-  console.log("Category", Category);
-
   return (
-    <div className="w-full flex gap-10">
+    <div className="w-full flex gap-10 p-8">
       <div className="flex-start flex-col gap-10 w-[80vw] max-lg:w-full">
         <div className={`w-full ${styles.videoContainer}`}>
           <iframe
@@ -35,7 +33,7 @@ const TopicPage = async ({ params }) => {
         </div>
         <h1 className="text-3xl font-bold">{Category.topicName}</h1>
 
-        <article className="prose prose-DEFAULT w-full">
+        <article className="prose prose-headings:text-custom-text prose-a:text-blue-600 hover:prose-a:text-blue-500 w-full">
           <Mdxtest source={Category.description} />
         </article>
       </div>
