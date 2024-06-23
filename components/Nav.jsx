@@ -4,7 +4,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
-import Modal from "./Modal";
+// import Modal from "./Modal";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+} from "@nextui-org/modal";
 import Login from "./Auth/Login";
 import Signup from "./Auth/SignUp";
 import { useLazyGetCurrentUserDetailsQuery } from "@app/store/services/user";
@@ -115,7 +124,7 @@ const Nav = () => {
           {!user && (
             <label
               onClick={() => setIsModalOpen(true)}
-              htmlFor="my-modal-3"
+              // htmlFor="my-modal-3"
               className="max-lg:text-sm max-sm:text-xs max-sm:py-2 max-sm:px-2 w-full custom_btn text-custom-text"
             >
               LOGIN
@@ -137,8 +146,12 @@ const Nav = () => {
         </div>
       )}
 
-      {isModalOpen && (
-        <Modal>
+      <Modal
+        className="bg-custom-background text-white"
+        isOpen={isModalOpen}
+        onOpenChange={() => setIsModalOpen(false)}
+      >
+        <ModalContent className="p-8">
           {isLoginView ? (
             <Login
               setIsLoginView={setIsLoginView}
@@ -150,8 +163,8 @@ const Nav = () => {
               setIsModalOpen={setIsModalOpen}
             />
           )}
-        </Modal>
-      )}
+        </ModalContent>
+      </Modal>
 
       {isMobile && <NavMobile />}
     </nav>

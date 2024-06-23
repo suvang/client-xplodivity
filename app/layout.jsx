@@ -5,6 +5,7 @@ import { Poppins } from "next/font/google";
 import { headers } from "next/headers";
 import { NextAuthProvider } from "@components/NextAuthProvider";
 import Footer from "@components/Footer";
+import { NextUIProvider } from "@nextui-org/system";
 
 export const metadata = {
   title: "xplodivity",
@@ -30,11 +31,13 @@ const RootLayout = ({ children }, request) => {
       <body className="bg-custom-background">
         <NextAuthProvider>
           <Providers>
-            <main className="app">
-              <Nav />
-              <div className="w-full flex flex-col grow">{children}</div>
-              <Footer />
-            </main>
+            <NextUIProvider>
+              <main className="app">
+                <Nav />
+                <div className="w-full flex flex-col grow">{children}</div>
+                <Footer />
+              </main>
+            </NextUIProvider>
           </Providers>
         </NextAuthProvider>
       </body>
