@@ -6,8 +6,8 @@ import {
   useLazyResendEmailVerificationQuery,
 } from "@app/store/services/user";
 import Card from "@components/Card/Card";
-import Modal from "@components/Modal";
 import TextInput from "@components/TextInput";
+import { Modal, ModalContent } from "@nextui-org/modal";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 const Profile = () => {
   const router = useRouter();
   const [emailSent, setIsEmailSent] = useState(false);
+  const [openEditProfile, setIsOpenEditProfile] = useState(false);
   const [loading, setLoading] = useState(false);
   const [logout] = useLazyLogoutUserQuery();
   const [resendEmailVerification] = useLazyResendEmailVerificationQuery();
@@ -45,7 +46,7 @@ const Profile = () => {
         <p>Email: {user?.email}</p>
         <p>Total Posts saved: {user?.savedPosts.length}</p>
         <label
-          htmlFor="my-modal-3"
+          onClick={() => setIsOpenEditProfile(true)}
           className="text-custom-text btn bg-custom-button-bg hover:bg-sky-500"
         >
           EDIT PROFILE
@@ -74,23 +75,29 @@ const Profile = () => {
         </button>
       </div>
 
-      <Modal>
-        <div className="flex-center flex-col gap-4">
-          <h1 className="text-3xl">EDIT PROFILE</h1>
-          {user?.passowrd && (
-            <>
-              <TextInput label="Current password" />
-              <TextInput label="New password" />
-              <button className="btn bg-green-500 hover:bg-green-400 text-custom-text">
-                SAVE
-              </button>
-            </>
-          )}
+      <Modal
+        isOpen={openEditProfile}
+        onOpenChange={() => setIsOpenEditProfile(false)}
+        className="bg-custom-background text-white"
+      >
+        <ModalContent>
+          <div className="flex-center flex-col gap-4">
+            <h1 className="text-3xl">EDIT PROFILE</h1>
+            {user?.password && (
+              <>
+                <TextInput label="Current password" />
+                <TextInput label="New password" />
+                <button className="btn bg-green-500 hover:bg-green-400 text-custom-text">
+                  SAVE
+                </button>
+              </>
+            )}
 
-          <button className="btn bg-rose-600 hover:bg-rose-500 text-custom-text">
-            DELETE ACCOUNT
-          </button>
-        </div>
+            <button className="btn bg-rose-600 hover:bg-rose-500 text-custom-text">
+              DELETE ACCOUNT
+            </button>
+          </div>
+        </ModalContent>
       </Modal>
 
       <div className="flex flex-wrap justify-center gap-y-4 gap-x-4 p-4 pt-0 pb-8">

@@ -4,16 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
-// import Modal from "./Modal";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-  useDisclosure,
-} from "@nextui-org/modal";
+import { Modal, ModalContent } from "@nextui-org/modal";
 import Login from "./Auth/Login";
 import Signup from "./Auth/SignUp";
 import { useLazyGetCurrentUserDetailsQuery } from "@app/store/services/user";
@@ -104,20 +95,22 @@ const Nav = () => {
                 className="max-[900px]:hidden text-black"
               />
 
-              <label htmlFor="my-modal-search" className="min-[900px]:hidden ">
+              <label className="min-[900px]:hidden ">
                 <FaSearch />
               </label>
             </>
           )}
 
           {pathname !== "/pricing" && (
-            <Modal htmlFor="my-modal-search">
-              <SearchBar
-                setSearchTerm={setSearchTerm}
-                searchTerm={searchTerm}
-                onChange={handleSearch}
-                name="topicName"
-              />
+            <Modal>
+              <ModalContent>
+                <SearchBar
+                  setSearchTerm={setSearchTerm}
+                  searchTerm={searchTerm}
+                  onChange={handleSearch}
+                  name="topicName"
+                />
+              </ModalContent>
             </Modal>
           )}
 

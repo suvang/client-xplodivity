@@ -4,7 +4,7 @@
 @tailwind base;
 @layer base {
   html {
-    @apply text-custom-text;
+    @apply text-custom-text !important;
   }
 }
 @tailwind components;

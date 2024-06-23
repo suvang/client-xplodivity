@@ -9,7 +9,7 @@ import {
 import { useLazyGetCurrentUserDetailsQuery } from "@app/store/services/user";
 import Button from "@components/Button";
 import Carousel from "@components/Carousel";
-import Modal from "@components/Modal";
+import { Modal, ModalContent } from "@nextui-org/modal";
 import Image from "next/image";
 import Script from "next/script";
 import React, { useState } from "react";
@@ -130,7 +130,7 @@ const CoursePreview = () => {
     <>
       <div className="flex flex-col p-10 gap-6 w-full">
         <Modal>
-          <div>You have purchased the course</div>
+          <ModalContent>You have purchased the course</ModalContent>
         </Modal>
 
         <Script src="https://checkout.razorpay.com/v1/checkout.js" />

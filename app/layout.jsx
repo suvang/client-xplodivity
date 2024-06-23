@@ -31,7 +31,7 @@ const RootLayout = ({ children }, request) => {
       <body className="bg-custom-background">
         <NextAuthProvider>
           <Providers>
-            <NextUIProvider>
+            <NextUIProvider disableBaseline>
               <main className="app">
                 <Nav />
                 <div className="w-full flex flex-col grow">{children}</div>
