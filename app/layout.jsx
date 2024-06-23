@@ -6,6 +6,7 @@ import { headers } from "next/headers";
 import { NextAuthProvider } from "@components/NextAuthProvider";
 import Footer from "@components/Footer";
 import { NextUIProvider } from "@nextui-org/system";
+import Auth from "@components/Auth";
 
 export const metadata = {
   title: "xplodivity",
@@ -31,7 +32,8 @@ const RootLayout = ({ children }, request) => {
       <body className="bg-custom-background">
         <NextAuthProvider>
           <Providers>
-            <NextUIProvider disableBaseline>
+            <NextUIProvider>
+              <Auth />
               <main className="app">
                 <Nav />
                 <div className="w-full flex flex-col grow">{children}</div>
