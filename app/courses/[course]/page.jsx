@@ -11,6 +11,7 @@ import Button from "@components/Button";
 import Carousel from "@components/Carousel";
 import { Modal, ModalContent } from "@nextui-org/modal";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import Script from "next/script";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
@@ -24,13 +25,15 @@ const CoursePreview = () => {
   } = useGetCoursesQuery({
     url: "16-js-projects",
   });
-  const user = useSelector((state) => state.user.currentUser) || {};
+  const user = useSelector((state) => state.user.currentUser);
   const courseDetails = data;
   const [formValues, setFormValues] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [getUserDetails] = useLazyGetCurrentUserDetailsQuery();
   const [createOrder] = useCreateOrderMutation();
   const [verifyPayment] = useVerifyPaymentMutation();
+  const router = useRouter();
+  const pathname = usePathname();
   const hasPurchased = user?.payments?.[0]?.courseId == courseDetails?._id;
 
   const handleOverviewDetails = (e) => {
@@ -78,8 +81,8 @@ const CoursePreview = () => {
 
         let data = await verifyPayment({
           orderId,
-          email: user.email,
-          userId: user._id,
+          email: user?.email,
+          userId: user?._id,
           courseId: courseDetails._id,
           razorpay_payment_id: razorpay_payment_id,
           razorpay_order_id: razorpay_order_id,
@@ -96,8 +99,8 @@ const CoursePreview = () => {
         }
       },
       prefill: {
-        name: user.fullName,
-        email: user.email,
+        name: user?.fullName,
+        email: user?.email,
       },
       theme: {
         color: "blue",
@@ -108,6 +111,11 @@ const CoursePreview = () => {
   };
 
   const handlePayment = async () => {
+    if (!user) {
+      router.push(`${pathname}?authType=login`);
+      return;
+    }
+
     try {
       // const orderUrl = "http://localhost:5000/api/v1/payment/order";
       // const resp = await fetch(orderUrl, {
@@ -153,7 +161,7 @@ const CoursePreview = () => {
           <label className="label">
             <span className="label-text">Description</span>
           </label>
-          {user.admin && (
+          {user?.admin && (
             <>
               <textarea
                 className="textarea textarea-bordered h-24"

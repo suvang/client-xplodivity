@@ -23,7 +23,7 @@
     "env-cmd": "^10.1.0",
     "framer-motion": "^11.2.11",
     "highlight.js": "^11.9.0",
-    "next": "13.4.2",
+    "next": "14.0.0",
     "next-auth": "^4.24.7",
     "next-mdx-remote": "^4.4.1",
     "postcss": "8.4.23",

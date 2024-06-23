@@ -2,6 +2,7 @@
 
 import { useGetCoursesQuery } from "@app/store/services/courses";
 import { usePathname, useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 let data = [
   {
@@ -92,8 +93,18 @@ const RootLayout = ({ children, params }) => {
   });
   const router = useRouter();
   const pathname = usePathname();
+  const user = useSelector((state) => state.user.currentUser);
   const paths = pathname.split("/");
   const id = paths[paths.length - 1];
+
+  const handleCourseItemClick = (video) => {
+    if (!user) {
+      router.push(`${pathname}?authType=login`);
+      return;
+    }
+
+    router.push(`/courses/16-js-projects/${video.id}`);
+  };
 
   return (
     <div className="flex grow">
@@ -116,7 +127,7 @@ const RootLayout = ({ children, params }) => {
           <p className=" p-2 text-left mt-[5px]">Content list:</p>
           {data?.courseContent?.map((video) => (
             <div
-              onClick={() => router.push(`/courses/16-js-projects/${video.id}`)}
+              onClick={() => handleCourseItemClick(video)}
               className={`${
                 Number(id) === video.id && "bg-blue-600"
               } cursor-pointer flex gap-3 items-center text-sm  p-4 border-t-[1px] last:border-b-[1px] border-gray-400`}
