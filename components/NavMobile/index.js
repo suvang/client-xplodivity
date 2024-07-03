@@ -77,8 +77,8 @@ const NavMobile = () => {
     );
   };
   return (
-    <div className="absolute right-0 top-0 flex justify-end  h-full w-full ">
-      <div className="flex mr-[60px] items-center gap-3">
+    <div className="absolute right-0 top-0 flex justify-end ">
+      <div className="flex mr-[60px] justify-center gap-3">
         <Link
           href="/pricing"
           className={`text-sm text-custom-text font-bold whitespace-nowrap bg-custom-button-bg py-1 px-2 h-fit rounded ${
@@ -99,7 +99,7 @@ const NavMobile = () => {
         )}
 
         {user && (
-          <Link href="/profile" className="flex gap-1 flex-center flex-col">
+          <Link href="/profile" className="flex gap-1 items-center flex-col">
             <Image
               src="/assets/images/logo.jpeg"
               alt="logo"
@@ -111,7 +111,7 @@ const NavMobile = () => {
           </Link>
         )}
       </div>
-      <Drawer navItems={navItems} />
+      {/* <Drawer navItems={navItems} /> */}
     </div>
   );
 };

@@ -15,6 +15,7 @@
     "@next/mdx": "^13.5.6",
     "@nextui-org/modal": "^2.0.36",
     "@nextui-org/system": "^2.2.2",
+    "@nextui-org/tabs": "^2.0.32",
     "@nextui-org/theme": "^2.2.6",
     "@reduxjs/toolkit": "^1.9.7",
     "@types/mdx": "^2.0.13",
