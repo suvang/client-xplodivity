@@ -5,8 +5,8 @@ import ReactPlayer from "react-player";
 const VideoPlayer = ({ courseItem }) => {
   return (
     <ReactPlayer
-      // width={"100%"}
-      // height={"100%"}
+      width={"100%"}
+      height={"100%"}
       url={courseItem?.videoUrl}
       config={{
         file: {

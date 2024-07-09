@@ -4,12 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 import Drawer from "@components/Drawer";
 import { useSelector } from "react-redux";
-import React from "react";
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import SearchBar from "@components/SearchBar";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const NavMobile = () => {
   const user = useSelector((state) => state.user.currentUser);
+  const [openRight, setOpenRight] = useState(false);
   const pathname = usePathname();
 
   const navItems = () => {
@@ -77,8 +79,8 @@ const NavMobile = () => {
     );
   };
   return (
-    <div className="absolute right-0 top-0 flex justify-end ">
-      <div className="flex mr-[60px] justify-center gap-3">
+    <div className="flex-center justify-end gap-3">
+      <div className="flex-center gap-3">
         <Link
           href="/pricing"
           className={`text-sm text-custom-text font-bold whitespace-nowrap bg-custom-button-bg py-1 px-2 h-fit rounded ${
@@ -112,6 +114,22 @@ const NavMobile = () => {
         )}
       </div>
       {/* <Drawer navItems={navItems} /> */}
+      <Drawer open={openRight} side="right" setOpen={setOpenRight} />
+
+      <GiHamburgerMenu
+        onClick={() => setOpenRight(!openRight)}
+        style={{ width: "25px", height: "25px" }}
+      />
+
+      {/* <div
+        className="rounded m-4
+        bg-purple-400 w-40 h-full flex
+        items-center justify-center
+        cursor-pointer"
+        onClick={() => setOpenRight(!openRight)}
+      >
+        open right drawer
+      </div> */}
     </div>
   );
 };

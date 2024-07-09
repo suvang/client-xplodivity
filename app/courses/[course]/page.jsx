@@ -17,7 +17,6 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import Overview from "./Overview";
 
 let orderId;
 const CoursePreview = () => {
@@ -154,7 +153,7 @@ const CoursePreview = () => {
   };
 
   return (
-    <div className="flex flex-col p-10 gap-6 w-full">
+    <div className="flex flex-col p-2 gap-6 w-full lg:p-10">
       <Modal>
         <ModalContent>You have purchased the course</ModalContent>
       </Modal>

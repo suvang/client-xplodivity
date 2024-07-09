@@ -5,7 +5,7 @@ import useIsMobile from "@utils/useIsMobile";
 import { usePathname, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { Tabs, Tab } from "@nextui-org/tabs";
-import Overview from "./Overview";
+import { cn } from "@nextui-org/theme";
 
 const RootLayout = ({ children, params }) => {
   const { data, error, isLoading } = useGetCoursesQuery({
@@ -65,7 +65,7 @@ const RootLayout = ({ children, params }) => {
           {children}
         </div>
       ) : (
-        <div className="flex w-full flex-col">
+        <div className="flex w-full flex-col flex-center">
           <Tabs
             onSelectionChange={(key) =>
               key === "overview"
@@ -73,6 +73,7 @@ const RootLayout = ({ children, params }) => {
                 : router.push(`${pathname}/1?tab=${key}`)
             }
             aria-label="Options"
+            className="m-4"
           >
             <Tab key="overview" title="Overview">
               {children}
@@ -81,14 +82,18 @@ const RootLayout = ({ children, params }) => {
             <Tab key="content-list" title="Content List">
               {children}
 
-              <div className="flex flex-col gap-4 w-[350px] bg-custom-background shadow-md shadow-sky-400 text-custom-text">
+              <div
+                className={cn(
+                  "flex flex-col gap-4 w-full bg-custom-background shadow-md shadow-sky-400 text-custom-text mt-10 lg:mt-0 lg:w-[350px] "
+                )}
+              >
                 <p className=" text-xl text-left p-2">
                   Build 16 Medium/Hard JavaScript Projects for Frontend Machine
                   coding Interview rounds
                 </p>
 
                 <div>
-                  <p className=" p-2 text-left">Content list:</p>
+                  <p className=" p-1 text-left">Content list:</p>
                   {data?.courseContent?.map((video) => (
                     <div
                       onClick={() => handleCourseItemClick(video)}
