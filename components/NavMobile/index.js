@@ -25,14 +25,14 @@ const NavMobile = () => {
             UPLOAD
           </Link>
         )}
-        <Link
+        {/* <Link
           href="/pricing"
           className={`text-2xl text-custom-text font-bold whitespace-nowrap bg-custom-button-bg py-1 px-2 rounded ${
             pathname === "/pricing" && "underline underline-offset-4"
           }`}
         >
           PREMIUM
-        </Link>
+        </Link> */}
         <Link
           href="/explore"
           className={`text-2xl text-custom-text font-medium ${
@@ -81,14 +81,14 @@ const NavMobile = () => {
   return (
     <div className="flex-center justify-end gap-3">
       <div className="flex-center gap-3">
-        <Link
+        {/* <Link
           href="/pricing"
           className={`text-sm text-custom-text font-bold whitespace-nowrap bg-custom-button-bg py-1 px-2 h-fit rounded ${
             pathname === "/pricing" && "underline underline-offset-4"
           }`}
         >
           PREMIUM
-        </Link>
+        </Link> */}
 
         {!user && (
           <label
@@ -113,23 +113,18 @@ const NavMobile = () => {
           </Link>
         )}
       </div>
-      {/* <Drawer navItems={navItems} /> */}
-      <Drawer open={openRight} side="right" setOpen={setOpenRight} />
+
+      <Drawer
+        open={openRight}
+        side="right"
+        setOpen={setOpenRight}
+        navItems={navItems()}
+      />
 
       <GiHamburgerMenu
         onClick={() => setOpenRight(!openRight)}
         style={{ width: "25px", height: "25px" }}
       />
-
-      {/* <div
-        className="rounded m-4
-        bg-purple-400 w-40 h-full flex
-        items-center justify-center
-        cursor-pointer"
-        onClick={() => setOpenRight(!openRight)}
-      >
-        open right drawer
-      </div> */}
     </div>
   );
 };

@@ -22,7 +22,7 @@ const classNames = {
   bottom: "inset-x-0 bottom-0",
 };
 
-const Drawer = ({ open, setOpen, side = "right" }) => {
+const Drawer = ({ open, setOpen, side = "right", navItems }) => {
   return (
     <div
       id={`dialog-${side}`}
@@ -65,7 +65,7 @@ const Drawer = ({ open, setOpen, side = "right" }) => {
                   "flex flex-col h-full overflow-y-scroll bg-white p-20 shadow-xl bg-blue-400 rounded-lg"
                 )}
               >
-                content
+                {navItems}
               </div>
             </div>
           </div>
