@@ -36,6 +36,7 @@ export const theme = {
     fontFamily: {},
     colors: {
       "custom-background": "#121521",
+      "modal-background": "#2c3a71",
       "custom-text": "#FFF",
       "custom-button-bg": "#139dff",
       "custom-button-bg-hover": "#33a7fa",

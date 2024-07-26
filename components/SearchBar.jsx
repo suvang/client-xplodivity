@@ -5,11 +5,11 @@ const SearchBar = ({ onChange, name, searchTerm, className }) => {
   const router = useRouter();
   return (
     <div className={`form-control ${className}`}>
-      <div className="input-group">
+      <div className="input-group w-full">
         <input
           type="text"
           placeholder="Search…"
-          className="input input-bordered bg-custom-text"
+          className="input input-bordered bg-custom-text w-full text-black"
           name={name}
           onChange={onChange}
         />

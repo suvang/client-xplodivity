@@ -35,7 +35,6 @@ const Nav = () => {
   const handleSearch = (e) => {
     setSearchTerm({ ...searchTerm, [e.target.name]: e.target.value });
   };
-  console.log("pathname", pathname);
 
   return (
     <nav className=" flex-between w-full pt-2 pb-2 md:px-12 px-2 bg-custom-background border-b border-[#272934]">

@@ -8,11 +8,21 @@ import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import SearchBar from "@components/SearchBar";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { Modal, ModalContent } from "@nextui-org/modal";
 
 const NavMobile = () => {
+  const [searchTerm, setSearchTerm] = useState({
+    topicName: "",
+    page: 1,
+  });
+  const [openSearchBar, setOpenSearchBar] = useState(false);
   const user = useSelector((state) => state.user.currentUser);
   const [openRight, setOpenRight] = useState(false);
   const pathname = usePathname();
+
+  const handleSearch = (e) => {
+    setSearchTerm({ ...searchTerm, [e.target.name]: e.target.value });
+  };
 
   const navItems = () => {
     return (
@@ -78,6 +88,7 @@ const NavMobile = () => {
       </div>
     );
   };
+
   return (
     <div className="flex-center justify-end gap-3">
       <div className="flex-center gap-3">
@@ -89,6 +100,43 @@ const NavMobile = () => {
         >
           PREMIUM
         </Link> */}
+
+        <div onClick={() => setOpenSearchBar(true)}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="white"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+        </div>
+
+        <Modal
+          isOpen={openSearchBar}
+          placement="center"
+          onOpenChange={() => {
+            if (openSearchBar) {
+              setOpenSearchBar(false);
+            }
+          }}
+        >
+          <ModalContent className="flex-center px-4 py-12 bg-modal-background">
+            <SearchBar
+              setSearchTerm={setSearchTerm}
+              searchTerm={searchTerm}
+              onChange={handleSearch}
+              name="topicName"
+              className="w-full"
+            />
+          </ModalContent>
+        </Modal>
 
         {!user && (
           <label

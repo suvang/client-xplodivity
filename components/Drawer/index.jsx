@@ -26,7 +26,7 @@ const Drawer = ({ open, setOpen, side = "right", navItems }) => {
   return (
     <div
       id={`dialog-${side}`}
-      className="relative z-10"
+      className="relative z-10 bg-modal-background"
       aria-labelledby="slide-over"
       role="dialog"
       aria-modal="true"
@@ -62,7 +62,7 @@ const Drawer = ({ open, setOpen, side = "right", navItems }) => {
             >
               <div
                 className={cn(
-                  "flex flex-col h-full overflow-y-scroll bg-white p-20 shadow-xl bg-blue-400 rounded-lg"
+                  "flex flex-col h-full overflow-y-scroll p-20 shadow-xl bg-modal-background rounded-lg"
                 )}
               >
                 {navItems}
