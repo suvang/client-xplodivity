@@ -41,7 +41,7 @@ const RootLayout = ({ children, params }) => {
               onClick={() => router.push("/courses/16-js-projects")}
               className={`${
                 !Number(id) && "bg-blue-600"
-              } flex gap-3 items-center text-xl font-medium p-2 border-t-[1px] border-b-[1px] border-gray-400`}
+              } flex gap-3 hover:bg-blue-600 cursor-pointer items-center text-xl font-medium p-2 border-t-[1px] border-b-[1px] border-gray-400`}
             >
               <p>Course Preview</p>
             </div>
@@ -53,7 +53,7 @@ const RootLayout = ({ children, params }) => {
                   onClick={() => handleCourseItemClick(video)}
                   className={`${
                     Number(id) === video.id && "bg-blue-600"
-                  } cursor-pointer flex gap-3 items-center text-sm  p-4 border-t-[1px] last:border-b-[1px] border-gray-400`}
+                  } cursor-pointer hover:bg-blue-600 flex gap-3 items-center text-sm  p-4 border-t-[1px] last:border-b-[1px] border-[#287cd9] shadow-[1px_2px_0px_0px_#287cd9]`}
                 >
                   <p>{video.videoName}</p>
                   <p className="text-sm">({video.duration})</p>

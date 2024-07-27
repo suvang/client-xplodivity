@@ -9,7 +9,13 @@ import {
 import { useLazyGetCurrentUserDetailsQuery } from "@app/store/services/user";
 import Button from "@components/Button";
 import Carousel from "@components/Carousel";
-import { Modal, ModalContent } from "@nextui-org/modal";
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+} from "@nextui-org/modal";
 import { Tab, Tabs } from "@nextui-org/tabs";
 import useIsMobile from "@utils/useIsMobile";
 import Image from "next/image";
@@ -143,19 +149,39 @@ const CoursePreview = () => {
     }
   };
 
-  const handleCourseItemClick = (video) => {
-    if (!user) {
-      router.push(`${pathname}?authType=login`);
-      return;
-    }
-    console.log("video", video);
-    router.push(`/courses/16-js-projects/${video.id}`);
-  };
-
   return (
     <div className="flex flex-col p-2 gap-6 w-full lg:p-10">
-      <Modal>
-        <ModalContent>You have purchased the course</ModalContent>
+      <Modal
+        isOpen={isModalOpen}
+        onOpenChange={() => {
+          if (isModalOpen) {
+            setIsModalOpen(false);
+          }
+        }}
+        classNames={{
+          closeButton: "hover:bg-white/5 active:bg-white/10 text-white",
+        }}
+      >
+        <ModalContent className="bg-modal-background">
+          {() => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                CONGRATULATIONS!
+              </ModalHeader>
+              <ModalBody>
+                <p>You have successfully purchased the course.</p>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  className="rounded-md border-none text-sm bg-red-500 hover:bg-red-400 font-medium"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
       </Modal>
 
       <Script src="https://checkout.razorpay.com/v1/checkout.js" />

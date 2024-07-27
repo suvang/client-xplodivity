@@ -21,6 +21,7 @@ export const paymentsApi = api.injectEndpoints({
           body,
         };
       },
+      invalidatesTags: ["User"],
     }),
   }),
 });
