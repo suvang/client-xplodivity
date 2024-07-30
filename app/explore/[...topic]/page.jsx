@@ -18,10 +18,11 @@ const TopicPage = async ({ params }) => {
   const Category = data.data[0];
 
   return (
-    <div className="w-full flex gap-10 p-8">
-      <div className="flex-start flex-col gap-10 w-[80vw] max-lg:w-full">
+    <div className="w-full flex gap-8 p-4">
+      <div className="flex-start flex-col gap-8 w-[90vw] max-lg:w-full">
         <div className={`w-full ${styles.videoContainer}`}>
           <iframe
+            className="w-full aspect-video"
             width="100%"
             height="100%"
             src={`https://www.youtube.com/embed/${Category.videoId}`}
