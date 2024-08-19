@@ -21,13 +21,17 @@ const Footer = () => {
 
       <nav>
         <h6 className="footer-title">Quick Links</h6>
-        <a className="link link-hover">Terms & Conditions</a>
-        <a className="link link-hover">Privacy policy</a>
-        <a className="link link-hover">Refunds & Cancellation Policy</a>
+        {/* <a className="link link-hover">Terms & Conditions</a>
+        <a className="link link-hover">Privacy policy</a> */}
+        <a className="link link-hover" href="/refund-policy">
+          Refunds & Cancellation Policy
+        </a>
       </nav>
 
       <nav>
-        <a className="link link-hover">Contact Us</a>
+        <a className="link link-hover" href="/contact-us">
+          Contact Us
+        </a>
       </nav>
     </footer>
   );

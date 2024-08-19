@@ -55,8 +55,8 @@ const RootLayout = ({ children, params }) => {
                     Number(id) === video.id && "bg-blue-600"
                   } cursor-pointer hover:bg-blue-600 flex gap-3 items-center text-sm  p-4 border-t-[1px] last:border-b-[1px] border-[#287cd9] shadow-[1px_2px_0px_0px_#287cd9]`}
                 >
-                  <p>{video.videoName}</p>
-                  <p className="text-sm">({video.duration})</p>
+                  <p className="text-sm">{video.videoName}</p>
+                  <p className="text-xs">({video.duration})</p>
                 </div>
               ))}
             </div>

@@ -229,14 +229,13 @@ const CoursePreview = () => {
         <div className="flex flex-wrap justify-center gap-y-4 gap-x-4">
           {courseDetails?.courseContent?.map((course) => {
             return (
-              <div className="flex flex-col flex-center p-2 rounded-md bg-orange-400 font-medium">
-                <Image
-                  src={`http://localhost:5000/${course.thumbnail}`}
-                  width={300}
-                  height={300}
-                />
-                <p className="text-xl">{course.videoName}</p>
-                <p className="text-sm">{course.duration}</p>
+              <div className="flex flex-col items-center space-between text-center p-2 gap-2 rounded-md bg-orange-400 font-medium max-w-[300px]">
+                <img src={course.thumbnail} width={300} height={300} />
+
+                <div className="flex flex-col">
+                  <p className="text-xl">{course.videoName}</p>
+                  <p className="text-sm">{course.duration}</p>
+                </div>
               </div>
             );
           })}

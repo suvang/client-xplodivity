@@ -6,6 +6,7 @@ async function getData(name) {
   const res = await fetch(
     `http://localhost:5000/api/v1/allcategories?blogUrl=${name}`
   );
+
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
@@ -17,6 +18,7 @@ const TopicPage = async ({ params }) => {
   const data = await getData(`${params.topic[0]}/${params.topic[1]}`);
   const Category = data.data[0];
 
+
   return (
     <div className="w-full flex gap-8 p-4">
       <div className="flex-start flex-col gap-8 w-[90vw] max-lg:w-full">
@@ -25,17 +27,17 @@ const TopicPage = async ({ params }) => {
             className="w-full aspect-video"
             width="100%"
             height="100%"
-            src={`https://www.youtube.com/embed/${Category.videoId}`}
-            title={Category.topicName}
+            src={`https://www.youtube.com/embed/${Category?.videoId}`}
+            title={Category?.topicName}
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen
           ></iframe>
         </div>
-        <h1 className="text-3xl font-bold">{Category.topicName}</h1>
+        <h1 className="text-3xl font-bold">{Category?.topicName}</h1>
 
         <article className="prose prose-headings:text-custom-text prose-a:text-blue-600 hover:prose-a:text-blue-500 w-full">
-          <Mdxtest source={Category.description} />
+          <Mdxtest source={Category?.description} />
         </article>
       </div>
 
@@ -43,7 +45,7 @@ const TopicPage = async ({ params }) => {
         <h1 className="text-lg text-center font-bold">
           TABLE OF <br /> CONTENTS
         </h1>
-        {Category.headings?.map((heading) => {
+        {Category?.headings?.map((heading) => {
           return (
             <Link
               className={`${styles.heading} bg-custom-button-bg hover:bg-sky-500 text-xl`}

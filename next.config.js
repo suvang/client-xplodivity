@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["localhost", "i.ytimg.com", "xplodivity.graphy.com"],
+    domains: [
+      "localhost",
+      "i.ytimg.com",
+      "xplodivity.graphy.com",
+      "d1ty23sn1lw3wk.cloudfront.net",
+    ],
   },
   experimental: {
     appDir: true,
