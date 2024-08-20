@@ -3,10 +3,8 @@ import styles from "./styles.module.css";
 
 const Home = () => {
   return (
-    <section
-      className={`w-full flex flex-col h-[calc((100vh)-(75px))] ${styles.height}`}
-    >
-      <div className="flex flex-col mt-10 gap-12 ">
+    <section className={`w-full flex flex-col p-4  ${styles.height}`}>
+      <div className="flex flex-col my-10 gap-12">
         <div className="flex-center gap-5 flex-col">
           <h1 className=" text-center text-4xl sm:text-6xl font-semibold">
             <span className="leading-tight">ENGINEER FOR KNOWLEDGE,</span>
@@ -21,8 +19,8 @@ const Home = () => {
         </div>
 
         <div className="flex flex-wrap justify-center gap-y-4 gap-x-4">
-          <Link href="/explore">
-            <div className="mockup-code bg-grey border-2 border-white w-[300px] sm:w-fit ">
+          <Link className="max-w-[400px] w-full" href="/explore">
+            <div className="mockup-code bg-grey border-2 border-white w-full sm:w-full ">
               <pre data-prefix="" className="text-primary-content font-bold">
                 <code className="text-3xl sm:text-3xl">EXPLORE</code>
               </pre>
@@ -65,8 +63,12 @@ const Home = () => {
             </div>
           </Link>
 
-          <a target="_blank" href="https://www.youtube.com/@xplodivity/videos">
-            <div className="mockup-code bg-grey border-2 border-white min-w-[300px] sm:w-fit">
+          <a
+            className="max-w-[400px] w-full"
+            target="_blank"
+            href="https://www.youtube.com/@xplodivity/videos"
+          >
+            <div className="mockup-code bg-grey border-2 border-white w-full sm:w-full">
               <pre data-prefix="" className="text-primary-content font-bold">
                 <code className="text-3xl sm:text-3xl">JOIN US</code>
               </pre>
@@ -109,18 +111,12 @@ const Home = () => {
             </div>
           </a>
 
-          <Link href="/courses">
-            <div className="mockup-code bg-grey border-2 border-white w-[300px] sm:w-fit ">
+          <Link href="/courses" className="max-w-[450px] w-full">
+            <div className="mockup-code bg-grey border-2 border-white w-full sm:w-full ">
               <pre data-prefix="" className="text-primary-content font-bold">
                 <code className="text-2xl sm:text-3xl">
                   MEMBER-ONLY CONTENT
                 </code>
-              </pre>
-              <pre
-                data-prefix=">"
-                className="text-warning font-bold text-md sm:text-lg"
-              >
-                <code>Unlock Premium Content – Enroll Today</code>
               </pre>
               <pre
                 data-prefix=">"
@@ -130,15 +126,21 @@ const Home = () => {
               </pre>
               <pre
                 data-prefix=">"
-                className="text-primary-content font-bold text-md sm:text-lg"
+                className="text-warning font-bold text-md sm:text-lg"
               >
-                <code>Thorough explanations & code walkthroughs</code>
+                <code>
+                  Unlock Premium Content –&nbsp;
+                  <span className="text-sm">Enroll Today</span>
+                </code>
               </pre>
               <pre
                 data-prefix=">"
-                className="text-info font-bold text-md sm:text-lg"
+                className="text-primary-content font-bold text-md sm:text-lg"
               >
-                <code>Unlock Your Next Level of Expertise</code>
+                <code>
+                  Thorough explanations & <br />
+                  &nbsp;<span className="ml-11">code walkthroughs</span>
+                </code>
               </pre>
               <pre
                 data-prefix=">"
