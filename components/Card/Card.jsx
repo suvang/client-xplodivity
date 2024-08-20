@@ -63,7 +63,9 @@ const Card = ({ image, title, tags, savePost, id, categoryType }) => {
       />
 
       <div className="py-2 px-3 flex-start flex-col gap-3.5">
-        <h1 className="break-words text-base font-medium">{title}</h1>
+        <h1 className="break-words text-base font-medium line-clamp-2">
+          {title}
+        </h1>
 
         <div className="text-xs flex-center gap-2">
           <p className="bg-green-500 py-0.5 px-1 font-medium rounded">FREE</p>

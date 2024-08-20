@@ -22,43 +22,43 @@ const Home = () => {
 
         <div className="flex flex-wrap justify-center gap-y-4 gap-x-4">
           <Link href="/explore">
-            <div className="mockup-code bg-indigo-700 w-[300px] sm:w-fit ">
+            <div className="mockup-code bg-grey border-2 border-white w-[300px] sm:w-fit ">
               <pre data-prefix="" className="text-primary-content font-bold">
-                <code className="text-3xl sm:text-4xl">EXPLORE</code>
+                <code className="text-3xl sm:text-3xl">EXPLORE</code>
               </pre>
               <pre
                 data-prefix=">"
-                className="text-warning font-bold text-md sm:text-xl"
+                className="text-warning font-bold text-md sm:text-lg"
               >
                 <code>Frontend dev</code>
               </pre>
               <pre
                 data-prefix=">"
-                className="text-success font-bold text-md sm:text-xl"
+                className="text-success font-bold text-md sm:text-lg"
               >
                 <code>Backend Dev</code>
               </pre>
               <pre
                 data-prefix=">"
-                className="text-primary-content font-bold text-md sm:text-xl"
+                className="text-primary-content font-bold text-md sm:text-lg"
               >
                 <code>FullStack Dev</code>
               </pre>
               <pre
                 data-prefix=">"
-                className="text-info font-bold text-md sm:text-xl"
+                className="text-info font-bold text-md sm:text-lg"
               >
                 <code>Artificial Intelligence</code>
               </pre>
               <pre
                 data-prefix=">"
-                className="text-error font-bold text-md sm:text-xl"
+                className="text-error font-bold text-md sm:text-lg"
               >
                 <code>Tech news</code>
               </pre>
               <pre
                 data-prefix=">"
-                className="text-accent font-bold text-md sm:text-xl"
+                className="text-accent font-bold text-md sm:text-lg"
               >
                 <code>And more...</code>
               </pre>
@@ -66,48 +66,94 @@ const Home = () => {
           </Link>
 
           <a target="_blank" href="https://www.youtube.com/@xplodivity/videos">
-            <div className="mockup-code bg-red-600 min-w-[300px] sm:w-fit">
+            <div className="mockup-code bg-grey border-2 border-white min-w-[300px] sm:w-fit">
               <pre data-prefix="" className="text-primary-content font-bold">
-                <code className="text-3xl sm:text-4xl">JOIN US</code>
+                <code className="text-3xl sm:text-3xl">JOIN US</code>
               </pre>
               <pre
                 data-prefix=">"
-                className="text-warning font-bold text-md sm:text-xl"
+                className="text-warning font-bold text-md sm:text-lg"
               >
-                <code>1600+ subscribers</code>
+                <code>Big community</code>
               </pre>
               <pre
                 data-prefix=">"
-                className="text-success font-bold text-md sm:text-xl"
+                className="text-success font-bold text-md sm:text-lg"
               >
                 <code>Frequent uploads</code>
               </pre>
               <pre
                 data-prefix=">"
-                className="text-primary-content font-bold text-md sm:text-xl"
+                className="text-primary-content font-bold text-md sm:text-lg"
               >
                 <code>Tons of tutorials</code>
               </pre>
               <pre
                 data-prefix=">"
-                className="text-info font-bold text-md sm:text-xl"
+                className="text-info font-bold text-md sm:text-lg"
               >
                 <code>Giveaways</code>
               </pre>
               <pre
                 data-prefix=">"
-                className="text-warning font-bold text-md sm:text-xl"
+                className="text-warning font-bold text-md sm:text-lg"
               >
                 <code>Tech Insights & News</code>
               </pre>
               <pre
                 data-prefix=">"
-                className="text-accent font-bold text-md sm:text-xl"
+                className="text-accent font-bold text-md sm:text-lg"
               >
                 <code>And more...</code>
               </pre>
             </div>
           </a>
+
+          <Link href="/courses">
+            <div className="mockup-code bg-grey border-2 border-white w-[300px] sm:w-fit ">
+              <pre data-prefix="" className="text-primary-content font-bold">
+                <code className="text-2xl sm:text-3xl">
+                  MEMBER-ONLY CONTENT
+                </code>
+              </pre>
+              <pre
+                data-prefix=">"
+                className="text-warning font-bold text-md sm:text-lg"
+              >
+                <code>Unlock Premium Content – Enroll Today</code>
+              </pre>
+              <pre
+                data-prefix=">"
+                className="text-success font-bold text-md sm:text-lg"
+              >
+                <code>Learn at Your Own Pace</code>
+              </pre>
+              <pre
+                data-prefix=">"
+                className="text-primary-content font-bold text-md sm:text-lg"
+              >
+                <code>Thorough explanations & code walkthroughs</code>
+              </pre>
+              <pre
+                data-prefix=">"
+                className="text-info font-bold text-md sm:text-lg"
+              >
+                <code>Unlock Your Next Level of Expertise</code>
+              </pre>
+              <pre
+                data-prefix=">"
+                className="text-error font-bold text-md sm:text-lg"
+              >
+                <code>No bullshit, No time waste</code>
+              </pre>
+              <pre
+                data-prefix=">"
+                className="text-accent font-bold text-md sm:text-lg"
+              >
+                <code>And more...</code>
+              </pre>
+            </div>
+          </Link>
         </div>
       </div>
 

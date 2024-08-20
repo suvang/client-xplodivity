@@ -16,7 +16,10 @@ const Course = ({ params }) => {
   return (
     <div className="text-2xl p-0 h-full w-full lg:max-w-[700px] lg:p-2 flex-col">
       <VideoPlayer courseItem={courseItem} />
-      <p className="text-custom-text mt-3 underline underline-offset-8 cursor-pointer">
+      <p
+        onClick={() => window.open(courseItem.sourceCode, "_blank")}
+        className="text-custom-text mt-3 underline underline-offset-8 cursor-pointer"
+      >
         Click here to get source code
       </p>
     </div>
