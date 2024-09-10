@@ -16,9 +16,7 @@ import {
   ModalHeader,
   ModalFooter,
 } from "@nextui-org/modal";
-import { Tab, Tabs } from "@nextui-org/tabs";
 import useIsMobile from "@utils/useIsMobile";
-import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import React, { useState } from "react";
@@ -72,33 +70,13 @@ const CoursePreview = () => {
         const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
           response;
 
-        // const resp = await fetch(
-        //   "http://localhost:5000/api/v1/payment/paymentverification",
-        //   {
-        //     method: "POST",
-        //     headers: {
-        //       // Authorization: 'YOUR_AUTH_HERE'
-        //       "Content-Type": "application/json", // Ensure this header is set
-        //     },
-
-        //     body: JSON.stringify({
-        //       orderId,
-        //       email: user.email,
-        //       userId: user._id,
-        //       courseId: courseDetails._id,
-        //       razorpay_payment_id: razorpay_payment_id,
-        //       razorpay_order_id: razorpay_order_id,
-        //       razorpay_signature: razorpay_signature,
-        //     }),
-        //   }
-        // );
-        // const data = await resp.json();
-
         let data = await verifyPayment({
           orderId,
           email: user?.email,
           userId: user?._id,
           courseId: courseDetails._id,
+          courseName: courseDetails?.courseName,
+          courseUrl: window.location.href,
           razorpay_payment_id: razorpay_payment_id,
           razorpay_order_id: razorpay_order_id,
           razorpay_signature: razorpay_signature,
@@ -132,15 +110,6 @@ const CoursePreview = () => {
     }
 
     try {
-      // const orderUrl = "http://localhost:5000/api/v1/payment/order";
-      // const resp = await fetch(orderUrl, {
-      //   method: "POST",
-      //   headers: {
-      //     // Authorization: 'YOUR_AUTH_HERE'
-      //   },
-      //   body: JSON.stringify({ amount: 399 }),
-      // });
-      // const data = await resp.json();
       let data = await createOrder({ amount: 399 });
       orderId = data.data.data.id;
       initPayment(data.data.data);
@@ -200,11 +169,12 @@ const CoursePreview = () => {
         )}
       </div>
 
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Description</span>
-        </label>
-        {user?.admin && (
+      {user?.admin && (
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Description</span>
+          </label>
+
           <>
             <textarea
               className="textarea textarea-bordered h-24"
@@ -217,8 +187,8 @@ const CoursePreview = () => {
               <Mdxtest source={formValues.description} />
             </article>
           </>
-        )}
-      </div>
+        </div>
+      )}
 
       <article className="prose prose-headings:text-custom-text prose-a:text-blue-600 hover:prose-a:text-blue-500 w-full">
         <Mdxtest source={courseDetails?.topDescription} />

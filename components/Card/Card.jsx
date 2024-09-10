@@ -45,21 +45,19 @@ const Card = ({ image, title, tags, savePost, id, categoryType }) => {
       return "+";
     }
 
-    // if (location.pathname.includes("/profile")) {
-    //   return "UNSAVE";
-    // }
-
     return save;
   };
 
   return (
-    <div className={`w-[320px] rounded-lg h-80 bg-custom-card-bg `}>
+    <div
+      className={`w-full max-w-[400px] md:w-[380px] rounded-lg h-fit md:h-[350px] bg-custom-card-bg `}
+    >
       <Image
         src={`http://localhost:5000/${image}`}
         alt="logo"
         width={384}
         height={100}
-        className={`object-contain rounded-t-lg ${styles.image}`}
+        className={`object-contain rounded-t-lg md:${styles.image} w-full`}
       />
 
       <div className="py-2 px-3 flex-start flex-col gap-3.5">

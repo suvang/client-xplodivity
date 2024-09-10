@@ -13,6 +13,7 @@ const VideoPlayer = ({ courseItem }) => {
           attributes: {
             controlsList: "nodownload",
           },
+          forceHLS: true,
         },
       }}
       onContextMenu={(e) => e.preventDefault()}

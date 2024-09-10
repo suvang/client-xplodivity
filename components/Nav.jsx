@@ -117,7 +117,7 @@ const Nav = () => {
             <label
               onClick={() => setIsModalOpen(true)}
               // htmlFor="my-modal-3"
-              className="max-lg:text-sm max-sm:text-xs max-sm:py-2 max-sm:px-2 w-full custom_btn text-custom-text"
+              className="max-lg:text-sm max-sm:text-xs max-sm:py-2 max-sm:px-2 w-fit custom_btn text-custom-text"
             >
               LOGIN
             </label>

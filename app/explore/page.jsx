@@ -52,7 +52,7 @@ const Explore = ({ params }) => {
   }, [pathname]);
 
   return (
-    <div className="flex-center flex-col gap-10 p-10">
+    <div className="flex-center flex-col gap-10 py-10 px-4">
       <div className="flex flex-wrap justify-center gap-y-4 gap-x-4">
         {isLoading &&
           [1, 2, 3, 4, 5, 6, 7, 8].map(() => {

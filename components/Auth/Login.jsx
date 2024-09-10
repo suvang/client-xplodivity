@@ -6,6 +6,7 @@ import TextInput from "@components/TextInput";
 import React, { useState } from "react";
 import ForgotPassword from "./ForgotPassword";
 import { signIn } from "next-auth/react";
+import { usePathname, useRouter } from "next/navigation";
 
 const Login = ({}) => {
   const [login] = useLoginUserMutation();
@@ -14,9 +15,10 @@ const Login = ({}) => {
     Password: "",
   });
   const [showForgotPassword, setForgotPassword] = useState(false);
-
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const router = useRouter();
+  const pathname = usePathname();
 
   const inputData = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });
@@ -90,7 +92,9 @@ const Login = ({}) => {
 
       <div onClick={() => setForgotPassword(true)}>Forgot password?</div>
 
-      <p>Dont have an account? Sign up.</p>
+      <p onClick={() => router.push(`${pathname}?authType=signup`)}>
+        Dont have an account? Sign up.
+      </p>
     </div>
   );
 };

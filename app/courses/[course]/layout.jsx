@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { Tabs, Tab } from "@nextui-org/tabs";
 import { cn } from "@nextui-org/theme";
+import { FaLock } from "react-icons/fa";
 
 const RootLayout = ({ children, params }) => {
   const { data, error, isLoading } = useGetCoursesQuery({
@@ -17,6 +18,9 @@ const RootLayout = ({ children, params }) => {
   const user = useSelector((state) => state.user.currentUser);
   const paths = pathname.split("/");
   const id = paths[paths.length - 1];
+  const hasPurchased = user?.purchasedCourses?.some(
+    (course) => course?.courseId === data?._id
+  );
 
   const handleCourseItemClick = (video) => {
     if (!user) {
@@ -55,8 +59,15 @@ const RootLayout = ({ children, params }) => {
                     Number(id) === video.id && "bg-blue-600"
                   } cursor-pointer hover:bg-blue-600 flex gap-3 items-center text-sm  p-4 border-t-[1px] last:border-b-[1px] border-[#287cd9] shadow-[1px_2px_0px_0px_#287cd9]`}
                 >
-                  <p className="text-sm">{video.videoName}</p>
-                  <p className="text-xs">({video.duration})</p>
+                  <div className="flex gap-2 items-center">
+                    {!hasPurchased && (
+                      <div className="w-[20px] h-[20px]">
+                        <FaLock size={20} />
+                      </div>
+                    )}
+                    <p>{video.videoName}</p>
+                  </div>
+                  <p className="text-sm">({video.duration})</p>
                 </div>
               ))}
             </div>
@@ -99,9 +110,16 @@ const RootLayout = ({ children, params }) => {
                       onClick={() => handleCourseItemClick(video)}
                       className={`${
                         Number(id) === video.id && "bg-blue-600"
-                      } cursor-pointer flex gap-3 items-center text-sm  p-4 border-t-[1px] last:border-b-[1px] border-gray-400`}
+                      } cursor-pointer flex gap-3 items-center justify-between text-sm  p-4 border-t-[1px] last:border-b-[1px] border-gray-400`}
                     >
-                      <p>{video.videoName}</p>
+                      <div className="flex gap-2 items-center">
+                        {!hasPurchased && (
+                          <div className="w-[20px] h-[20px]">
+                            <FaLock size={20} />
+                          </div>
+                        )}
+                        <p>{video.videoName}</p>
+                      </div>
                       <p className="text-sm">({video.duration})</p>
                     </div>
                   ))}

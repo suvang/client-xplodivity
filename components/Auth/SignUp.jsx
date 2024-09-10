@@ -6,6 +6,7 @@ import { validateEmail } from "@utils/validation";
 import React, { useEffect, useState } from "react";
 import GoogleAuthButton from "@components/GoogleAuthButton";
 import { signIn } from "next-auth/react";
+import { usePathname, useRouter } from "next/navigation";
 
 const Signup = ({}) => {
   const [value, setValue] = useState({
@@ -24,6 +25,8 @@ const Signup = ({}) => {
     message: "",
     error: false,
   });
+  const router = useRouter();
+  const pathname = usePathname();
 
   const inputData = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });
@@ -150,7 +153,9 @@ const Signup = ({}) => {
         SIGN UP
       </button>
 
-      <p>Already have an account? Log in</p>
+      <p onClick={() => router.push(`${pathname}?authType=login`)}>
+        Already have an account? Log in
+      </p>
     </div>
   );
 };
