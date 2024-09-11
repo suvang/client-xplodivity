@@ -107,7 +107,7 @@ const Signup = ({}) => {
         password: value.password,
       };
       await register(data);
-      // setIsModalOpen(false);
+      router.replace(`${pathname}`);
     } catch (err) {
       console.log(err);
     }

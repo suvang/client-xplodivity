@@ -6,7 +6,7 @@ import TextInput from "@components/TextInput";
 import React, { useState } from "react";
 import ForgotPassword from "./ForgotPassword";
 import { signIn } from "next-auth/react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const Login = ({}) => {
   const [login] = useLoginUserMutation();
@@ -19,6 +19,7 @@ const Login = ({}) => {
   const [error, setError] = useState("");
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const inputData = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });
@@ -35,7 +36,8 @@ const Login = ({}) => {
       };
 
       const res = await login(data).unwrap();
-      // setIsModalOpen(false);
+
+      router.replace(`${pathname}`);
 
       if (!res.success) {
         if (!res.userExist) {

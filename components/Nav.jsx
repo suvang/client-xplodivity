@@ -10,13 +10,11 @@ import Signup from "./Auth/SignUp";
 import { useLazyGetCurrentUserDetailsQuery } from "@app/store/services/user";
 import { useSelector } from "react-redux";
 import { FaSearch } from "react-icons/fa";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import useIsMobile from "@utils/useIsMobile";
 import NavMobile from "./NavMobile";
 
 const Nav = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoginView, setIsLoginView] = useState(true);
   const [searchTerm, setSearchTerm] = useState({
     topicName: "",
     page: 1,
@@ -25,8 +23,9 @@ const Nav = () => {
   const [getUserDetails] = useLazyGetCurrentUserDetailsQuery();
   const user = useSelector((state) => state.user.currentUser);
   const isMobile = useIsMobile();
-
-  console.log("userdata", user);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const authType = searchParams.get("authType");
 
   useEffect(() => {
     getUserDetails();
@@ -115,7 +114,7 @@ const Nav = () => {
 
           {!user && (
             <label
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => router.push("?authType=login")}
               // htmlFor="my-modal-3"
               className="max-lg:text-sm max-sm:text-xs max-sm:py-2 max-sm:px-2 w-fit custom_btn text-custom-text"
             >
@@ -140,21 +139,15 @@ const Nav = () => {
 
       <Modal
         className="bg-custom-background text-white"
-        isOpen={isModalOpen}
-        onOpenChange={() => setIsModalOpen(false)}
+        isOpen={authType}
+        onOpenChange={() => {
+          if (authType) {
+            router.replace(`${pathname}`);
+          }
+        }}
       >
         <ModalContent className="p-8">
-          {isLoginView ? (
-            <Login
-              setIsLoginView={setIsLoginView}
-              setIsModalOpen={setIsModalOpen}
-            />
-          ) : (
-            <Signup
-              setIsLoginView={setIsLoginView}
-              setIsModalOpen={setIsModalOpen}
-            />
-          )}
+          {authType === "login" ? <Login /> : <Signup />}
         </ModalContent>
       </Modal>
 
