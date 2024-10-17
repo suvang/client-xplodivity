@@ -26,7 +26,7 @@ const nextAuthOptions = {
     async signIn({ account, profile }) {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/v1/userdetails/login",
+          `${process.env.NEXTAUTH_URL}/api/v1/userdetails/login`,
           {
             method: "POST",
             mode: "cors",

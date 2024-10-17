@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: {
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    NEXT_16_JS_PROJECTS_PRICE: process.env.NEXT_16_JS_PROJECTS_PRICE, // pulls from .env file
+  },
   images: {
     domains: [
       "localhost",

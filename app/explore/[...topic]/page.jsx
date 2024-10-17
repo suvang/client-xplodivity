@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 
 async function getData(name) {
   const res = await fetch(
-    `http://localhost:5000/api/v1/allcategories?blogUrl=${name}`
+    `${process.env.NEXTAUTH_URL}/api/v1/allcategories?blogUrl=${name}`
   );
 
   if (!res.ok) {
@@ -17,7 +17,6 @@ async function getData(name) {
 const TopicPage = async ({ params }) => {
   const data = await getData(`${params.topic[0]}/${params.topic[1]}`);
   const Category = data.data[0];
-
 
   return (
     <div className="w-full flex gap-8 p-4">

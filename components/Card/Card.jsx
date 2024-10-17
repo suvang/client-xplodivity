@@ -53,7 +53,7 @@ const Card = ({ image, title, tags, savePost, id, categoryType }) => {
       className={`w-full max-w-[400px] md:w-[380px] rounded-lg h-fit md:h-[350px] bg-custom-card-bg `}
     >
       <Image
-        src={`http://localhost:5000/${image}`}
+        src={`${process.env.NEXTAUTH_URL}/${image}`}
         alt="logo"
         width={384}
         height={100}

@@ -110,7 +110,9 @@ const CoursePreview = () => {
     }
 
     try {
-      let data = await createOrder({ amount: 399 });
+      let data = await createOrder({
+        amount: process.env.NEXT_16_JS_PROJECTS_PRICE,
+      });
       orderId = data.data.data.id;
       initPayment(data.data.data);
     } catch (error) {
