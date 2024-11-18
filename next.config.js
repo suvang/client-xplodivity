@@ -10,6 +10,7 @@ const nextConfig = {
       "i.ytimg.com",
       "xplodivity.graphy.com",
       "d1ty23sn1lw3wk.cloudfront.net",
+      "xplodivity.xyz",
     ],
   },
   experimental: {
