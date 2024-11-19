@@ -14,7 +14,8 @@ const nextConfig = {
     ],
   },
   experimental: {
-    webpackBuildWorker: true,
+    appDir: true,
+    serverActions: true,
   },
 };
 
