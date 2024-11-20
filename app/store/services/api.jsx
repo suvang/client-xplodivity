@@ -4,7 +4,7 @@ const getFetchBaseQuery = () => {
   const token =
     typeof window !== "undefined" &&
     JSON.parse(localStorage.getItem("token"))?.token;
-  const baseUrl = `${process.env.NEXTAUTH_URL}/api/v1`;
+  const baseUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1`;
 
   return {
     baseUrl,
