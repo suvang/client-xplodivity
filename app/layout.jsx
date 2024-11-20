@@ -11,11 +11,12 @@ import Auth from "@components/Auth";
 export const metadata = {
   title: "xplodivity",
   description: "JavaScript made easy",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 const poppins = Poppins({
