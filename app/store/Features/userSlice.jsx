@@ -101,7 +101,8 @@ const fulfilledState = async (state, action, isLocalstorage = true) => {
       token: action?.payload?.token,
       expires: action?.payload?.expires,
     };
-    localStorage.setItem("token", JSON.stringify(item));
+    if (typeof window !== "undefined")
+      localStorage.setItem("token", JSON.stringify(item));
   }
 };
 
@@ -117,7 +118,7 @@ const userSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.currentUser = null;
-      localStorage.removeItem("token");
+      if (typeof window !== "undefined") localStorage.removeItem("token");
     },
     setCurrentUser: (state, action) => {
       fulfilledState(state, action, true);

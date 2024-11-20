@@ -18,7 +18,10 @@ export const authApi = api.injectEndpoints({
             token: response.token,
             expires: response.expires,
           };
-          localStorage.setItem("token", JSON.stringify(item));
+          if (typeof window !== "undefined") {
+            localStorage.setItem("token", JSON.stringify(item));
+          }
+
           dispatch(setCurrentUser(response));
         } else {
           console.log("ERROR");
@@ -38,7 +41,9 @@ export const authApi = api.injectEndpoints({
             token: response.token,
             expires: response.expires,
           };
-          localStorage.setItem("token", JSON.stringify(item));
+          if (typeof window !== "undefined") {
+            localStorage.setItem("token", JSON.stringify(item));
+          }
           dispatch(setCurrentUser(response));
         } else {
           console.log("ERROR");
