@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 
 async function getData(name) {
   const res = await fetch(
-    `${process.env.API_BASE_URL}/api/v1/allcategories?blogUrl=${name}`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/allcategories?blogUrl=${name}`
   );
 
   if (!res.ok) {
