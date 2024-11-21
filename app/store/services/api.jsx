@@ -1,12 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const NEXT_PUBLIC_API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const getFetchBaseQuery = () => {
-  console.log("NEXT_PUBLIC_API_BASE_URL", NEXT_PUBLIC_API_BASE_URL);
+  console.log(
+    "process.env.NEXT_PUBLIC_API_BASE_URL",
+    process.env.NEXT_PUBLIC_API_BASE_URL
+  );
   const token =
     typeof window !== "undefined" &&
     JSON.parse(localStorage.getItem("token"))?.token;
-  const baseUrl = `${NEXT_PUBLIC_API_BASE_URL}/api/v1`;
+  const baseUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1`;
 
   return {
     baseUrl,
