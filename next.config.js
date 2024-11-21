@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // env: {
-  //   API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  //   NEXT_16_JS_PROJECTS_PRICE: process.env.NEXT_16_JS_PROJECTS_PRICE, // pulls from .env file
-  // },
+  env: {
+    NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
+    NEXT_16_JS_PROJECTS_PRICE: process.env.NEXT_16_JS_PROJECTS_PRICE, // pulls from .env file
+  },
   images: {
     domains: [
       "localhost",
