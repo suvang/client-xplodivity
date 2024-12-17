@@ -11,6 +11,7 @@ const nextConfig = {
       "xplodivity.graphy.com",
       "d1ty23sn1lw3wk.cloudfront.net",
       "xplodivity.xyz",
+      "devapi.xplodivity.xyz",
     ],
   },
   experimental: {
