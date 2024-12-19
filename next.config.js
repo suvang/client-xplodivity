@@ -3,6 +3,8 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_API_BASE_URL: "http://localhost:5000",
     NEXT_16_JS_PROJECTS_PRICE: "64900", // pulls from .env file
+    NEXTAUTH_URL: "https://xplodivity.xyz/",
+    NEXT_API_URL: "devapi.xplodivity.xyz",
   },
   images: {
     domains: [
