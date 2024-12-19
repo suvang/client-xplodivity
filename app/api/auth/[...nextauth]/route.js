@@ -59,6 +59,7 @@ const nextAuthOptions = {
           secure: true,
           expires: new Date(account.expires_at * 1000),
           sameSite: sameSite,
+          domain: `.${process.env.NEXT_DOMAIN_URL},
         });
 
         const isUserExist = await response.json();
