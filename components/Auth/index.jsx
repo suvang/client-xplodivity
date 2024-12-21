@@ -2,7 +2,7 @@
 
 import { Modal, ModalContent } from "@nextui-org/modal";
 import { usePathname, useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import Login from "./Login";
 import Signup from "./SignUp";
 import { useRouter } from "next/navigation";
@@ -15,10 +15,11 @@ const Auth = () => {
   const router = useRouter();
   const user = useSelector((state) => state.user.currentUser);
 
-  if (user) {
-    router.replace(pathname);
-    return;
-  }
+  useEffect(() => {
+    if (user) {
+      router.replace(pathname);
+    }
+  }, [user]);
 
   return (
     <Modal
