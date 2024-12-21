@@ -26,8 +26,8 @@ const Profile = () => {
   const [savePost] = useSavePostMutation();
 
   const handleLogout = async () => {
-    await logout();
     await signOut({ redirect: false });
+    await logout();
     router.push("/explore");
   };
 
