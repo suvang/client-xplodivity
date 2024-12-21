@@ -99,7 +99,7 @@ const Course = ({ params }) => {
   };
 
   return (
-    <div className="text-2xl p-0 h-full w-full lg:max-w-[700px] lg:p-2 flex-col">
+    <div className="text-2xl p-0 h-full w-full flex-center md:flex-start lg:max-w-[700px] lg:p-2 flex-col">
       {hasPurchased ? (
         <>
           {" "}
@@ -148,7 +148,7 @@ const Course = ({ params }) => {
 
           <Script src="https://checkout.razorpay.com/v1/checkout.js" />
           <div
-            className="w-[50vw] h-[50vh] flex flex-col flex-center bg-black"
+            className="md:w-[50vw] md:h-[50vh] p-3 mx-2 md:mx-0 flex flex-col flex-center bg-black"
             onClick={handlePayment}
           >
             <p className="text-sm mb-2 text-red-500">

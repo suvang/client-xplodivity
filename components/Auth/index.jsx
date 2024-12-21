@@ -6,17 +6,24 @@ import React from "react";
 import Login from "./Login";
 import Signup from "./SignUp";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 const Auth = () => {
   const searchParams = useSearchParams();
   const authType = searchParams.get("authType");
   const pathname = usePathname();
   const router = useRouter();
+  const user = useSelector((state) => state.user.currentUser);
+
+  if (user) {
+    router.replace(pathname);
+    return;
+  }
 
   return (
     <Modal
       className="bg-custom-background text-white"
-      isOpen={authType}
+      isOpen={!user && authType}
       onOpenChange={() => {
         router.replace(pathname);
       }}
