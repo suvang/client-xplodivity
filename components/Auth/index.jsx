@@ -17,7 +17,9 @@ const Auth = () => {
 
   useEffect(() => {
     if (user) {
-      router.replace(pathname);
+      setTimeout(() => {
+        router.replace(pathname);
+      }, 0);
     }
   }, [user]);
 
