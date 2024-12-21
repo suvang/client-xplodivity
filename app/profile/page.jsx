@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { signOut } from "next-auth/react";
 
 const Profile = () => {
   const router = useRouter();
@@ -26,6 +27,7 @@ const Profile = () => {
 
   const handleLogout = async () => {
     await logout();
+    await signOut({ redirect: false });
     router.push("/explore");
   };
 
