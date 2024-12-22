@@ -14,6 +14,7 @@ import React from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { signOut } from "next-auth/react";
+import withAuth from "@utils/withAuth";
 
 const Profile = () => {
   const router = useRouter();
@@ -128,4 +129,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default withAuth(Profile);
