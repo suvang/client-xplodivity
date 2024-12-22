@@ -57,7 +57,7 @@ const NavMobile = () => {
             pathname === "/courses" && "underline underline-offset-4"
           }`}
         >
-          PREMIUM CONTENT
+          PREMIUM
         </Link>
 
         {!user && (
