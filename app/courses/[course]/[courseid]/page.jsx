@@ -155,11 +155,11 @@ const Course = ({ params }) => {
               Permission denied. You haven't purchased this course yet.
             </p>
             <div className=" flex flex-col gap-2 p-4 items-center border-2 border-blue-600 hover:bg-gray-900 rounded-md w-fit h-fit cursor-pointer">
-              <div className="flex gap-3 items-center text-3xl">
+              <div className="flex flex-col gap-3 items-center text-3xl">
                 <span className="text-blue-600 font-bold text-3xl">
                   BUY THIS COURSE
                 </span>
-                FOR $10
+                FOR ₹{data?.price}
               </div>
               <p className="text-base">Get full access for 1 Year</p>
             </div>

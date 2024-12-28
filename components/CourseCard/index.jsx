@@ -20,9 +20,9 @@ const CourseCard = ({ course }) => {
         </h1>
 
         <div className="text-xs flex-center gap-2">
-          <p className="text-3xl">${course.price}</p>
+          <p className="text-3xl">₹{course.price}</p>
           <p className="text-base line-through text-gray-400">
-            ${course.fullPrice}
+            ₹{course.fullPrice}
           </p>
           <p className="bg-green-500 py-0.5 px-1 font-medium rounded">
             {course.discount}

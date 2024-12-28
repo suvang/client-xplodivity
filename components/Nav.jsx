@@ -80,7 +80,7 @@ const Nav = () => {
               pathname === "/courses" && "underline underline-offset-4"
             }`}
           >
-            COURSES
+            PREMIUM
           </Link>
 
           {pathname === "/" ? null : (
