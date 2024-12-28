@@ -9,7 +9,9 @@ const Home = () => {
           <h1 className=" text-center text-4xl sm:text-6xl font-semibold">
             <span className="leading-tight">ENGINEER FOR KNOWLEDGE,</span>
             <br className="max-md:hidden" />
-            <span>NOT JUST INTERVIEWS 🧠</span>
+            <span>
+              <span className="md:hidden pl-1"></span>NOT JUST INTERVIEWS 🧠
+            </span>
           </h1>
 
           <p className="text-center text-xl">
