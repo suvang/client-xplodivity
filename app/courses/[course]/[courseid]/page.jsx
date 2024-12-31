@@ -36,7 +36,7 @@ const Course = ({ params }) => {
 
   const initPayment = (data) => {
     const options = {
-      key: "rzp_test_HwwK3yQRnEOlhI",
+      key: process.env.NEXT_RAZORPAY_KEY_ID,
       amount: data.amount,
       currency: data.currency,
       name: "xplodivity",

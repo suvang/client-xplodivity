@@ -4,6 +4,7 @@ const nextConfig = {
     NEXT_PUBLIC_API_BASE_URL: "https://devapi.xplodivity.xyz",
     NEXT_16_JS_PROJECTS_PRICE: "64900", // pulls from .env file
     NEXTAUTH_URL: "https://xplodivity.xyz",
+    NEXT_RAZORPAY_KEY_ID: "rzp_test_HwwK3yQRnEOlhI",
   },
   images: {
     domains: [
