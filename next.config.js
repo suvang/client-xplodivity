@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: {
+    NEXTAUTH_URL: "https://xplodivity.xyz",
+  },
   images: {
     domains: [
       "localhost",
@@ -8,6 +11,7 @@ const nextConfig = {
       "d1ty23sn1lw3wk.cloudfront.net",
       "xplodivity.xyz",
       "devapi.xplodivity.xyz",
+      "api.xplodivity.com",
     ],
   },
   experimental: {
