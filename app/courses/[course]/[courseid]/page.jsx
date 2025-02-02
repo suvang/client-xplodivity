@@ -36,7 +36,7 @@ const Course = ({ params }) => {
 
   const initPayment = (data) => {
     const options = {
-      key: process.env.NEXT_RAZORPAY_KEY_ID,
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
       amount: data.amount,
       currency: data.currency,
       name: "xplodivity",
@@ -89,7 +89,7 @@ const Course = ({ params }) => {
 
     try {
       let data = await createOrder({
-        amount: process.env.NEXT_16_JS_PROJECTS_PRICE,
+        amount: process.env.NEXT_PUBLIC_16_JS_PROJECTS_PRICE,
       });
       orderId = data.data.data.id;
       initPayment(data.data.data);
