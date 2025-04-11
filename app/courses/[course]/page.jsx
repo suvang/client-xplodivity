@@ -8,7 +8,6 @@ import {
 } from "@app/store/services/payment";
 import { useLazyGetCurrentUserDetailsQuery } from "@app/store/services/user";
 import Button from "@components/Button";
-import Carousel from "@components/Carousel";
 import {
   Modal,
   ModalBody,
@@ -16,11 +15,14 @@ import {
   ModalHeader,
   ModalFooter,
 } from "@nextui-org/modal";
+import { Button as Btn } from "@heroui/button";
 import useIsMobile from "@utils/useIsMobile";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { FaCrown } from "react-icons/fa";
+import Carousel from "@components/Carousel";
 
 let orderId;
 const CoursePreview = () => {
@@ -45,7 +47,9 @@ const CoursePreview = () => {
   const pathname = usePathname();
   const paths = pathname.split("/");
   const id = paths[paths.length - 1];
-  const hasPurchased = user?.payments?.[0]?.courseId == courseDetails?._id;
+  const hasPurchased = user?.purchasedCourses?.some(
+    (course) => course?.courseId === courseDetails?._id
+  );
 
   if (isMobile && tab === "content-list") return;
 
@@ -56,7 +60,7 @@ const CoursePreview = () => {
     });
   };
 
-  const initPayment = (data) => {
+  const initPayment = (data, pricePack) => {
     const options = {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
       amount: data.amount,
@@ -77,6 +81,7 @@ const CoursePreview = () => {
           courseId: courseDetails._id,
           courseName: courseDetails?.courseName,
           courseUrl: window.location.href,
+          pricePack,
           razorpay_payment_id: razorpay_payment_id,
           razorpay_order_id: razorpay_order_id,
           razorpay_signature: razorpay_signature,
@@ -103,7 +108,7 @@ const CoursePreview = () => {
     rzp1.open();
   };
 
-  const handlePayment = async () => {
+  const handlePayment = async (pricePack) => {
     if (!user) {
       router.push(`${pathname}?authType=login`);
       return;
@@ -111,10 +116,10 @@ const CoursePreview = () => {
 
     try {
       let data = await createOrder({
-        amount: process.env.NEXT_PUBLIC_16_JS_PROJECTS_PRICE,
+        amount: Number(`${pricePack?.price}00`),
       });
       orderId = data.data.data.id;
-      initPayment(data.data.data);
+      initPayment(data.data.data, pricePack);
     } catch (error) {
       console.log(error);
     }
@@ -156,18 +161,36 @@ const CoursePreview = () => {
       </Modal>
 
       <Script src="https://checkout.razorpay.com/v1/checkout.js" />
-      <div className="flex flex-col gap-5 h-[450px]">
+      <div className="flex flex-col gap-5">
         <Carousel images={courseDetails.courseContent} />
 
         <p className="text-3xl font-bold">{courseDetails.courseName}</p>
 
         {!hasPurchased && (
-          <Button
-            className="w-52 rounded-sm border-none text-xl hover:bg-custom-button-bg-hover bg-custom-button-bg font-medium"
-            onClick={handlePayment}
-          >
-            BUY NOW
-          </Button>
+          <div className="flex max-md:flex-col max-md:gap-6 max-md:items-center gap-4 py-4">
+            {courseDetails?.pricePacks?.map((pack) => (
+              <div className="relative h-fit w-fit max-md:w-[80%] flex flex-col justify-center items-center gap-3 text-center min-w-[200px] bg-black p-4 border rounded-xl">
+                {pack?.popular && (
+                  <div className="absolute -top-3 -right-3 bg-[#FFD700] text-black text-xs font-medium px-2 py-[1.5px] rounded-md">
+                    Popular
+                  </div>
+                )}
+                <p className="text-sm flex gap-1 flex-center">
+                  {pack?.accessYears === 1 ? "one" : "Three"} year access{" "}
+                  <FaCrown color="#FFD700" />
+                </p>
+                <p className="text-3xl font-bold underline">₹{pack?.price}</p>
+                <Btn
+                  onClick={() => handlePayment(pack)}
+                  className="py-1 w-full"
+                  color="warning"
+                  variant="shadow"
+                >
+                  BUY NOW
+                </Btn>
+              </div>
+            ))}
+          </div>
         )}
       </div>
 
