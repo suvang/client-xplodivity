@@ -34,8 +34,8 @@ const RootLayout = ({ children, params }) => {
   return (
     <>
       {!isMobile ? (
-        <div className="flex grow">
-          <div className="flex flex-col gap-4 w-[350px] bg-custom-background shadow-md shadow-sky-400 text-custom-text">
+        <div className="flex grow w-full">
+          <div className="flex flex-col gap-4 w-[20%] max-w-[350px] bg-custom-background shadow-md shadow-sky-400 text-custom-text">
             <p className=" text-2xl text-left p-4">
               Build 16 Medium/Hard JavaScript Projects for Frontend Machine
               coding Interview rounds
@@ -73,7 +73,7 @@ const RootLayout = ({ children, params }) => {
             </div>
           </div>
 
-          {children}
+          <div className="w-[80%]">{children}</div>
         </div>
       ) : (
         <div className="flex w-full flex-col flex-center">

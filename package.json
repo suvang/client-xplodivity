@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroui/button": "^2.2.16",
+    "@heroui/card": "^2.2.15",
     "@mdx-js/loader": "^2.3.0",
     "@mdx-js/react": "^2.3.0",
     "@next/font": "^13.5.6",
