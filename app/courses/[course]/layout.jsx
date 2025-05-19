@@ -76,7 +76,7 @@ const RootLayout = ({ children, params }) => {
           <div className="w-[80%]">{children}</div>
         </div>
       ) : (
-        <div className="flex w-full flex-col flex-center">
+        <div className="flex w-full flex-col flex-center pt-20 pb-20">
           <Tabs
             onSelectionChange={(key) =>
               key === "overview"
