@@ -1,7 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 import { nextui } from "@nextui-org/theme";
-import { color } from "framer-motion";
-import css from "styled-jsx/css";
 
 export const content = [
   "./app/**/*.{js,ts,jsx,tsx,mdx}",

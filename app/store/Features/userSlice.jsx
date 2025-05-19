@@ -92,7 +92,6 @@ export const deleteProfile = createAsyncThunk("deleteProfile", async () =>
 );
 
 const fulfilledState = async (state, action, isLocalstorage = true) => {
-  console.log("action?.payload", action?.payload);
   state.loading = false;
   state.currentUser = action?.payload?.data;
   state.error = "";
