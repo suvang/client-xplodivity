@@ -34,7 +34,7 @@ const RootLayout = ({ children, params }) => {
   return (
     <>
       {!isMobile ? (
-        <div className="flex grow w-full">
+        <div className="flex grow w-full py-14">
           <div className="flex flex-col gap-4 w-[20%] max-w-[350px] bg-custom-background shadow-md shadow-sky-400 text-custom-text">
             <p className=" text-2xl text-left p-4">
               Build 16 Medium/Hard JavaScript Projects for Frontend Machine

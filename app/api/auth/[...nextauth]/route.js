@@ -49,9 +49,8 @@ const nextAuthOptions = {
         );
 
         const headersCookie = response.headers.getSetCookie();
-        console.log("response", response);
+
         let cookieOptions = headersCookie[0].split("token=")[1].split(";");
-        console.log("cookieOptions", cookieOptions);
         // let expires = cookieOptions[2].split("Expires=")[1];
         let sameSite = cookieOptions[4]?.split("SameSite=")[1] ?? "None";
 
@@ -63,7 +62,6 @@ const nextAuthOptions = {
         });
 
         const isUserExist = await response.json();
-        console.log("isUserExist", isUserExist);
         return true;
       } catch (error) {
         console.log(error);

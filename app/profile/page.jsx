@@ -15,6 +15,9 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { signOut } from "next-auth/react";
 import withAuth from "@utils/withAuth";
+import { Tabs, Tab } from "@nextui-org/tabs";
+import CourseCard from "@components/CourseCard";
+import { useGetCoursesQuery } from "@app/store/services/courses";
 
 const Profile = () => {
   const router = useRouter();
@@ -25,6 +28,12 @@ const Profile = () => {
   const [resendEmailVerification] = useLazyResendEmailVerificationQuery();
   const user = useSelector((state) => state.user.currentUser);
   const [savePost] = useSavePostMutation();
+  const { data: courses = [], error, isLoading } = useGetCoursesQuery({});
+  const purchasedCourses = courses?.filter((course) =>
+    user?.purchasedCourses?.some(
+      (purchasedCourse) => purchasedCourse.courseId == course._id
+    )
+  );
 
   const handleLogout = async () => {
     await signOut({ redirect: false });
@@ -44,7 +53,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex-start flex-col gap-12">
+    <div className="flex-start flex-col gap-12 pt-28 pb-20">
       <div className="flex-start flex-col gap-3 p-8 pb-2">
         <p>Email: {user?.email}</p>
         <p>Total Posts saved: {user?.savedPosts.length}</p>
@@ -103,27 +112,74 @@ const Profile = () => {
         </ModalContent>
       </Modal>
 
-      <div className="flex flex-wrap justify-center gap-y-4 gap-x-4 p-4 pt-0 pb-8">
-        <div className="w-full p-2">
-          <h1 className="text-3xl">SAVED POSTS</h1>
-        </div>
+      <div className="w-full max-w-[1400px] mx-auto px-4">
+        <Tabs
+          aria-label="Profile sections"
+          className="w-full"
+          variant="underlined"
+          classNames={{
+            tabList:
+              "gap-6 w-full relative rounded-none p-0 border-b border-divider",
+            cursor: "w-full bg-[#22d3ee]",
+            tab: "max-w-fit px-0 h-12",
+            tabContent: "group-data-[selected=true]:text-[#22d3ee]",
+          }}
+        >
+          <Tab
+            key="courses"
+            title={
+              <div className="flex items-center space-x-2">
+                <span>My Courses</span>
+              </div>
+            }
+          >
+            <div className="flex flex-wrap justify-center gap-6 pt-8">
+              {(!user?.purchasedCourses ||
+                user?.purchasedCourses?.length === 0) && (
+                <p className="text-2xl">
+                  You haven't purchased any courses yet...
+                </p>
+              )}
 
-        {user?.savedPosts?.length === 0 && (
-          <p className="text-2xl">You have no saved posts...</p>
-        )}
+              {purchasedCourses?.map((course) => (
+                <Link
+                  href={`/courses/${course?.courseId}`}
+                  key={course?.courseId}
+                >
+                  <CourseCard course={course} />
+                </Link>
+              ))}
+            </div>
+          </Tab>
 
-        {user?.savedPosts?.map((item) => (
-          <Link href={`/explore/${item?.blogUrl}`}>
-            <Card
-              image={item?.image}
-              title={item?.topicName}
-              tags={item?.tags}
-              id={item?._id}
-              categoryType={item?.categoryType}
-              savePost={savePost}
-            />
-          </Link>
-        ))}
+          <Tab
+            key="saved"
+            title={
+              <div className="flex items-center space-x-2">
+                <span>Saved Posts</span>
+              </div>
+            }
+          >
+            <div className="flex flex-wrap justify-center gap-6 pt-8">
+              {user?.savedPosts?.length === 0 && (
+                <p className="text-2xl">You have no saved posts...</p>
+              )}
+
+              {user?.savedPosts?.map((item) => (
+                <Link href={`/explore/${item?.blogUrl}`} key={item?._id}>
+                  <Card
+                    image={item?.image}
+                    title={item?.topicName}
+                    tags={item?.tags}
+                    id={item?._id}
+                    categoryType={item?.categoryType}
+                    savePost={savePost}
+                  />
+                </Link>
+              ))}
+            </div>
+          </Tab>
+        </Tabs>
       </div>
     </div>
   );

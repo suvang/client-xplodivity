@@ -21,7 +21,6 @@ const Card = ({ image, title, tags, savePost, id, categoryType }) => {
   const handleSavePost = async (e) => {
     e.preventDefault();
     if (!user) {
-      console.log("login first");
       return;
     }
 

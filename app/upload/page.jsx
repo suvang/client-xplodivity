@@ -41,12 +41,8 @@ const Upload = () => {
   let setFormValues =
     active.text === "Article" ? setArticleFormValues : setVideoFormValues;
 
-  console.log("articleFormValues", articleFormValues);
-  console.log("videoFormValues", videoFormValues);
-
   const handleOverviewDetails = (e) => {
     if (e === "headings") {
-      console.log(" headings.target.value", headings.target.value);
       const tempObj = { ...formValues };
       tempObj.headings.push(headings.target.value);
       setFormValues(tempObj);

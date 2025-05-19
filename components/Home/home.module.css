@@ -1,0 +1,44 @@
+.height {
+  min-height: calc(100vh - 80px);
+}
+
+.customshape1 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: -1;
+}
+
+.shapefill {
+  fill: #1a1e2e;
+}
+
+/* For the gradient text effects */
+.gradientText {
+  background: linear-gradient(45deg, #38bdf8, #3b82f6, #818cf8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% auto;
+  animation: gradient 5s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Glow effect for key elements */
+.glow {
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+}
