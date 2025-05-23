@@ -20,13 +20,13 @@ jobs:
           mkdir -p ~/.ssh
 
           if [[ "${GITHUB_REF##*/}" == "main" ]]; then
-            echo "$PROD_EC2_SSH_KEY" > ~/.ssh/id_rsa
+            echo "$PROD_EC2_KEY" > ~/.ssh/id_rsa
             echo "HOST=$PROD_EC2_HOST" >> $GITHUB_ENV
             echo "USER=$PROD_EC2_USER" >> $GITHUB_ENV
             echo "FOLDER=client-xplodivity" >> $GITHUB_ENV
             echo "PM2_APP_NAME=client-xplodivity" >> $GITHUB_ENV
           else
-            echo "$DEV_EC2_SSH_KEY" > ~/.ssh/id_rsa
+            echo "$DEV_EC2_KEY" > ~/.ssh/id_rsa
             echo "HOST=$DEV_EC2_HOST" >> $GITHUB_ENV
             echo "USER=$DEV_EC2_USER" >> $GITHUB_ENV
             echo "FOLDER=client-xplodivity" >> $GITHUB_ENV
@@ -36,8 +36,8 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
         env:
-          PROD_EC2_SSH_KEY: ${{ secrets.PROD_EC2_SSH_KEY }}
-          DEV_EC2_SSH_KEY: ${{ secrets.DEV_EC2_SSH_KEY }}
+          PROD_EC2_KEY: ${{ secrets.PROD_EC2_KEY }}
+          DEV_EC2_KEY: ${{ secrets.DEV_EC2_KEY }}
           PROD_EC2_HOST: ${{ secrets.PROD_EC2_HOST }}
           DEV_EC2_HOST: ${{ secrets.DEV_EC2_HOST }}
           PROD_EC2_USER: ${{ secrets.PROD_EC2_USER }}
@@ -52,5 +52,5 @@ jobs:
             git reset --hard origin/${GITHUB_REF##*/}
             npm install
             npm run build
-            pm2 restart $PM2_APP_NAME ||  pm2 restart $PM2_APP_NAME || pm2 start npm --name "$PM2_APP_NAME" -- run start -- -p 3000
+            pm2 restart $PM2_APP_NAME || pm2 start npm --name "$PM2_APP_NAME" -- run start -- -p 3000
           EOF
