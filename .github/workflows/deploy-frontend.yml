@@ -21,16 +21,16 @@ jobs:
 
           if [[ "${GITHUB_REF##*/}" == "main" ]]; then
             echo "$PROD_EC2_SSH_KEY" > ~/.ssh/id_rsa
-            echo "HOST=$PROD_EC2_HOST" >> $GITHUB_ENV
-            echo "USER=$PROD_EC2_USER" >> $GITHUB_ENV
-            echo "FOLDER=client-xplodivity" >> $GITHUB_ENV
-            echo "PM2_APP_NAME=client-xplodivity" >> $GITHUB_ENV
+            export HOST=$PROD_EC2_HOST
+            export USER=$PROD_EC2_USER
+            echo "HOST=$HOST" >> $GITHUB_ENV
+            echo "USER=$USER" >> $GITHUB_ENV
           else
             echo "$DEV_EC2_SSH_KEY" > ~/.ssh/id_rsa
-            echo "HOST=$DEV_EC2_HOST" >> $GITHUB_ENV
-            echo "USER=$DEV_EC2_USER" >> $GITHUB_ENV
-            echo "FOLDER=client-xplodivity" >> $GITHUB_ENV
-            echo "PM2_APP_NAME=client-xplodivity" >> $GITHUB_ENV
+            export HOST=$DEV_EC2_HOST
+            export USER=$DEV_EC2_USER
+            echo "HOST=$HOST" >> $GITHUB_ENV
+            echo "USER=$USER" >> $GITHUB_ENV
           fi
 
           chmod 600 ~/.ssh/id_rsa
