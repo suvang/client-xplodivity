@@ -45,14 +45,19 @@ jobs:
 
       - name: Deploy via SSH
         run: |
-          ssh -t $USER@$HOST << EOF
-            source ~/.bashrc
-            cd /home/$USER/$FOLDER
-            if [ ! -d ".git" ]; then
-              echo "Git repo not found, cloning..."
+          ssh -tt $USER@$HOST << EOF
+            set -e  # Exit if any command fails
+            source ~/.bashrc || source ~/.profile
+
+            export PATH="\$HOME/.nvm/versions/node/\$(ls \$HOME/.nvm/versions/node | tail -1)/bin:\$PATH"
+
+            if [ ! -d "/home/$USER/$FOLDER/.git" ]; then
+              echo "Git repo not found, recloning..."
+              rm -rf /home/$USER/$FOLDER
               git clone https://github.com/suvang/client-xplodivity.git /home/$USER/$FOLDER
-              cd /home/$USER/$FOLDER
             fi
+
+            cd /home/$USER/$FOLDER
             git fetch origin
             git checkout ${GITHUB_REF##*/}
             git reset --hard origin/${GITHUB_REF##*/}
