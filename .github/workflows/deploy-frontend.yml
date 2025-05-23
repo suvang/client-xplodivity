@@ -20,20 +20,20 @@ jobs:
           mkdir -p ~/.ssh
 
           if [[ "${GITHUB_REF##*/}" == "main" ]]; then
-            echo "KEY=${{ secrets.PROD_EC2_SSH_KEY }}" >> $GITHUB_ENV
+            echo "$PROD_EC2_SSH_KEY" > ~/.ssh/id_rsa
             echo "HOST=$PROD_EC2_HOST" >> $GITHUB_ENV
             echo "USER=$PROD_EC2_USER" >> $GITHUB_ENV
             echo "FOLDER=client-xplodivity" >> $GITHUB_ENV
             echo "PM2_APP_NAME=client-xplodivity" >> $GITHUB_ENV
           else
-            echo "KEY=${{ secrets.DEV_EC2_SSH_KEY }}" >> $GITHUB_ENV
+            echo "$DEV_EC2_SSH_KEY" > ~/.ssh/id_rsa
             echo "HOST=$DEV_EC2_HOST" >> $GITHUB_ENV
             echo "USER=$DEV_EC2_USER" >> $GITHUB_ENV
             echo "FOLDER=client-xplodivity" >> $GITHUB_ENV
             echo "PM2_APP_NAME=client-xplodivity" >> $GITHUB_ENV
           fi
 
-          chmod 600 ~/.ssh/xplodivity_ci_cd_dev_ec2_key
+          chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
         env:
           PROD_EC2_SSH_KEY: ${{ secrets.PROD_EC2_SSH_KEY }}
