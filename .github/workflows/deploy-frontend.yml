@@ -36,8 +36,8 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
         env:
-          PROD_EC2_KEY: ${{ secrets.PROD_EC2_KEY }}
-          DEV_EC2_KEY: ${{ secrets.DEV_EC2_KEY }}
+          PROD_EC2_SSH_KEY: ${{ secrets.PROD_EC2_SSH_KEY }}
+          DEV_EC2_SSH_KEY: ${{ secrets.DEV_EC2_SSH_KEY }}
           PROD_EC2_HOST: ${{ secrets.PROD_EC2_HOST }}
           DEV_EC2_HOST: ${{ secrets.DEV_EC2_HOST }}
           PROD_EC2_USER: ${{ secrets.PROD_EC2_USER }}
