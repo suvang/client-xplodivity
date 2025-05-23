@@ -1,0 +1,51 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set environment-specific variables
+        id: vars
+        run: |
+          if [[ "${GITHUB_REF##*/}" == "main" ]]; then
+            echo "KEY=${{ secrets.PROD_EC2_SSH_KEY }}" >> $GITHUB_ENV
+            echo "HOST=${{ secrets.PROD_EC2_HOST }}" >> $GITHUB_ENV
+            echo "USER=${{ secrets.PROD_EC2_USER }}" >> $GITHUB_ENV
+            echo "FOLDER=client-xplodivity" >> $GITHUB_ENV
+            echo "PM2_APP_NAME=nextjs-app" >> $GITHUB_ENV
+          else
+            echo "KEY=${{ secrets.DEV_EC2_SSH_KEY }}" >> $GITHUB_ENV
+            echo "HOST=${{ secrets.DEV_EC2_HOST }}" >> $GITHUB_ENV
+            echo "USER=${{ secrets.DEV_EC2_USER }}" >> $GITHUB_ENV
+            echo "FOLDER=client-xplodivity" >> $GITHUB_ENV
+            echo "PM2_APP_NAME=nextjs-app" >> $GITHUB_ENV
+          fi
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "$KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan $HOST >> ~/.ssh/known_hosts
+
+      - name: Deploy via SSH
+        run: |
+          ssh $USER@$HOST << EOF
+            cd /home/$USER/$FOLDER
+            git fetch origin
+            git checkout ${GITHUB_REF##*/}
+            git reset --hard origin/${GITHUB_REF##*/}
+            npm install
+            npm run build
+            pm2 restart $PM2_APP_NAME || pm2 start npm --name "$PM2_APP_NAME" -- run start -- -p 3000
+          EOF
