@@ -5,38 +5,43 @@ on:
     branches:
       - main
       - dev
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set environment-specific variables
-        id: vars
-        run: |
-          if [[ "${GITHUB_REF##*/}" == "main" ]]; then
-            echo "KEY=${{ secrets.PROD_EC2_SSH_KEY }}" >> $GITHUB_ENV
-            echo "HOST=${{ secrets.PROD_EC2_HOST }}" >> $GITHUB_ENV
-            echo "USER=${{ secrets.PROD_EC2_USER }}" >> $GITHUB_ENV
-            echo "FOLDER=client-xplodivity" >> $GITHUB_ENV
-            echo "PM2_APP_NAME=nextjs-app" >> $GITHUB_ENV
-          else
-            echo "KEY=${{ secrets.DEV_EC2_SSH_KEY }}" >> $GITHUB_ENV
-            echo "HOST=${{ secrets.DEV_EC2_HOST }}" >> $GITHUB_ENV
-            echo "USER=${{ secrets.DEV_EC2_USER }}" >> $GITHUB_ENV
-            echo "FOLDER=client-xplodivity" >> $GITHUB_ENV
-            echo "PM2_APP_NAME=nextjs-app" >> $GITHUB_ENV
-          fi
-
-      - name: Setup SSH
+      - name: Set up SSH key and environment variables
         run: |
           mkdir -p ~/.ssh
-          echo "$KEY" > ~/.ssh/id_rsa
+
+          if [[ "${GITHUB_REF##*/}" == "main" ]]; then
+            echo "$PROD_EC2_SSH_KEY" > ~/.ssh/id_rsa
+            echo "HOST=$PROD_EC2_HOST" >> $GITHUB_ENV
+            echo "USER=$PROD_EC2_USER" >> $GITHUB_ENV
+            echo "FOLDER=client-xplodivity" >> $GITHUB_ENV
+            echo "PM2_APP_NAME=client-xplodivity" >> $GITHUB_ENV
+          else
+            echo "$DEV_EC2_SSH_KEY" > ~/.ssh/id_rsa
+            echo "HOST=$DEV_EC2_HOST" >> $GITHUB_ENV
+            echo "USER=$DEV_EC2_USER" >> $GITHUB_ENV
+            echo "FOLDER=client-xplodivity" >> $GITHUB_ENV
+            echo "PM2_APP_NAME=client-xplodivity" >> $GITHUB_ENV
+          fi
+
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan $HOST >> ~/.ssh/known_hosts
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
+        env:
+          PROD_EC2_KEY: ${{ secrets.PROD_EC2_KEY }}
+          DEV_EC2_KEY: ${{ secrets.DEV_EC2_KEY }}
+          PROD_EC2_HOST: ${{ secrets.PROD_EC2_HOST }}
+          DEV_EC2_HOST: ${{ secrets.DEV_EC2_HOST }}
+          PROD_EC2_USER: ${{ secrets.PROD_EC2_USER }}
+          DEV_EC2_USER: ${{ secrets.DEV_EC2_USER }}
 
       - name: Deploy via SSH
         run: |
@@ -47,5 +52,5 @@ jobs:
             git reset --hard origin/${GITHUB_REF##*/}
             npm install
             npm run build
-            pm2 restart $PM2_APP_NAME || pm2 start npm --name "$PM2_APP_NAME" -- run start -- -p 3000
+            pm2 restart $PM2_APP_NAME ||  pm2 restart $PM2_APP_NAME || pm2 start npm --name "$PM2_APP_NAME" -- run start -- -p 3000
           EOF
