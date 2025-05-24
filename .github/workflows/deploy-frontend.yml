@@ -46,30 +46,29 @@ jobs:
       - name: Deploy via SSH
         run: |
           ssh -o StrictHostKeyChecking=no $USER@$HOST "bash -l -c '
-            set -e  # fail on first error
+            set -e  # Exit immediately if a command fails
 
-            echo \"🔍 Current directory: \$(pwd)\"
-            cd /home/$USER/$FOLDER || (echo \"❌ Directory /home/$USER/$FOLDER not found!\" && exit 1)
-            echo \"📂 Listing directory:\"
-            ls -la
+            cd /home/$USER/client-xplodivity || (echo \"❌ Folder not found\" && exit 1)
 
-            echo \"🔧 Checking installed binaries:\"
-            which node || echo \"⚠️ node not found\"
-            which npm || echo \"⚠️ npm not found\"
-            which pm2 || echo \"⚠️ pm2 not found\"
+            # Load nvm and Node.js
+            export NVM_DIR=\"/home/$USER/.nvm\"
+            [ -s \"\$NVM_DIR/nvm.sh\" ] && \. \"\$NVM_DIR/nvm.sh\"
 
-            echo \"🚀 Deploying branch ${GITHUB_REF##*/}...\"
-            git fetch origin
+            echo \"✅ Current Node version: \$(node -v || echo not found)\"
+            echo \"✅ Current npm version: \$(npm -v || echo not found)\"
+            echo \"✅ Current pm2 version: \$(pm2 -v || echo not found)\"
+
+            echo \"📦 Pulling latest changes...\"
             git checkout ${GITHUB_REF##*/}
             git pull origin ${GITHUB_REF##*/}
 
-            echo \"📦 Installing dependencies...\"
+            echo \"📥 Installing dependencies...\"
             npm install
 
             echo \"🏗️ Building project...\"
             npm run build
 
-            echo \"🔁 Restarting PM2 process...\"
-            pm2 stop $PM2_APP_NAME || true
-            pm2 start npm --name \"$PM2_APP_NAME\" -- run start -- -p 3000
+            echo \"🚀 Restarting app with PM2...\"
+            pm2 stop client-xplodivity || true
+            pm2 start npm --name \"client-xplodivity\" -- run start -- -p 3000
           '"
