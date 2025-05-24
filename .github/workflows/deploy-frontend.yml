@@ -45,23 +45,12 @@ jobs:
 
       - name: Deploy via SSH
         run: |
-          ssh -tt $USER@$HOST << EOF
-            set -e  # Exit if any command fails
-            source ~/.bashrc || source ~/.profile
-
-            export PATH="\$HOME/.nvm/versions/node/\$(ls \$HOME/.nvm/versions/node | tail -1)/bin:\$PATH"
-
-            if [ ! -d "/home/$USER/$FOLDER/.git" ]; then
-              echo "Git repo not found, recloning..."
-              rm -rf /home/$USER/$FOLDER
-              git clone https://github.com/suvang/client-xplodivity.git /home/$USER/$FOLDER
-            fi
-
+          ssh $USER@$HOST << EOF
             cd /home/$USER/$FOLDER
-            git fetch origin
             git checkout ${GITHUB_REF##*/}
-            git reset --hard origin/${GITHUB_REF##*/}
+            git pull origin ${GITHUB_REF##*/}
             npm install
             npm run build
-            pm2 restart $PM2_APP_NAME || pm2 start npm --name "$PM2_APP_NAME" -- run start -- -p 3000
+            pm2 stop $PM2_APP_NAME
+            pm2 start npm --name "$PM2_APP_NAME" -- run start -- -p 3000
           EOF
