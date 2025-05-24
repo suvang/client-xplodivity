@@ -21,16 +21,16 @@ jobs:
 
           if [[ "${GITHUB_REF##*/}" == "main" ]]; then
             echo "$PROD_EC2_SSH_KEY" > ~/.ssh/id_rsa
-            export HOST=$PROD_EC2_HOST
-            export USER=$PROD_EC2_USER
-            echo "HOST=$HOST" >> $GITHUB_ENV
-            echo "USER=$USER" >> $GITHUB_ENV
+            echo "HOST=$PROD_EC2_HOST" >> $GITHUB_ENV
+            echo "USER=$PROD_EC2_USER" >> $GITHUB_ENV
+            echo "FOLDER=client-xplodivity" >> $GITHUB_ENV
+            echo "PM2_APP_NAME=client-xplodivity" >> $GITHUB_ENV
           else
             echo "$DEV_EC2_SSH_KEY" > ~/.ssh/id_rsa
-            export HOST=$DEV_EC2_HOST
-            export USER=$DEV_EC2_USER
-            echo "HOST=$HOST" >> $GITHUB_ENV
-            echo "USER=$USER" >> $GITHUB_ENV
+            echo "HOST=$DEV_EC2_HOST" >> $GITHUB_ENV
+            echo "USER=$DEV_EC2_USER" >> $GITHUB_ENV
+            echo "FOLDER=client-xplodivity" >> $GITHUB_ENV
+            echo "PM2_APP_NAME=client-xplodivity" >> $GITHUB_ENV
           fi
 
           chmod 600 ~/.ssh/id_rsa
@@ -45,12 +45,31 @@ jobs:
 
       - name: Deploy via SSH
         run: |
-          ssh $USER@$HOST << EOF
-            cd /home/$USER/$FOLDER
+          ssh -o StrictHostKeyChecking=no $USER@$HOST "bash -l -c '
+            set -e  # fail on first error
+
+            echo \"🔍 Current directory: \$(pwd)\"
+            cd /home/$USER/$FOLDER || (echo \"❌ Directory /home/$USER/$FOLDER not found!\" && exit 1)
+            echo \"📂 Listing directory:\"
+            ls -la
+
+            echo \"🔧 Checking installed binaries:\"
+            which node || echo \"⚠️ node not found\"
+            which npm || echo \"⚠️ npm not found\"
+            which pm2 || echo \"⚠️ pm2 not found\"
+
+            echo \"🚀 Deploying branch ${GITHUB_REF##*/}...\"
+            git fetch origin
             git checkout ${GITHUB_REF##*/}
             git pull origin ${GITHUB_REF##*/}
+
+            echo \"📦 Installing dependencies...\"
             npm install
+
+            echo \"🏗️ Building project...\"
             npm run build
-            pm2 stop $PM2_APP_NAME
-            pm2 start npm --name "$PM2_APP_NAME" -- run start -- -p 3000
-          EOF
+
+            echo \"🔁 Restarting PM2 process...\"
+            pm2 stop $PM2_APP_NAME || true
+            pm2 start npm --name \"$PM2_APP_NAME\" -- run start -- -p 3000
+          '"
