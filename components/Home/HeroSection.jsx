@@ -108,7 +108,7 @@ const HeroSection = () => {
                 href="/courses"
                 className="px-8 py-3 text-center bg-transparent border border-[#3B82F6]/50 rounded-lg font-medium text-white/90 hover:text-white hover:border-[#3B82F6]/80 transition-all hover:-translate-y-1"
               >
-                View Courses
+                View Premium Content
               </Link>
             </motion.div>
           </motion.div>

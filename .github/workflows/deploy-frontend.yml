@@ -69,6 +69,6 @@ jobs:
             npm run build
 
             echo \"🚀 Restarting app with PM2...\"
-            pm2 stop client-xplodivity || true
-            pm2 start npm --name \"client-xplodivity\" -- run start -- -p 3000
+            pm2 stop nextjs-app || true
+            pm2 start npm --name \"nextjs-app\" -- run start -- -p 3000
           '"
