@@ -1,0 +1,74 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH key and environment variables
+        run: |
+          mkdir -p ~/.ssh
+
+          if [[ "${GITHUB_REF##*/}" == "main" ]]; then
+            echo "$PROD_EC2_SSH_KEY" > ~/.ssh/id_rsa
+            export HOST=$PROD_EC2_HOST
+            export USER=$PROD_EC2_USER
+            echo "HOST=$HOST" >> $GITHUB_ENV
+            echo "USER=$USER" >> $GITHUB_ENV
+          else
+            echo "$DEV_EC2_SSH_KEY" > ~/.ssh/id_rsa
+            export HOST=$DEV_EC2_HOST
+            export USER=$DEV_EC2_USER
+            echo "HOST=$HOST" >> $GITHUB_ENV
+            echo "USER=$USER" >> $GITHUB_ENV
+          fi
+
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
+        env:
+          PROD_EC2_SSH_KEY: ${{ secrets.PROD_EC2_SSH_KEY }}
+          DEV_EC2_SSH_KEY: ${{ secrets.DEV_EC2_SSH_KEY }}
+          PROD_EC2_HOST: ${{ secrets.PROD_EC2_HOST }}
+          DEV_EC2_HOST: ${{ secrets.DEV_EC2_HOST }}
+          PROD_EC2_USER: ${{ secrets.PROD_EC2_USER }}
+          DEV_EC2_USER: ${{ secrets.DEV_EC2_USER }}
+
+      - name: Deploy via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no $USER@$HOST "bash -l -c '
+            set -e  # Exit immediately if a command fails
+
+            cd /home/$USER/client-xplodivity || (echo \"❌ Folder not found\" && exit 1)
+
+            # Load nvm and Node.js
+            export NVM_DIR=\"/home/$USER/.nvm\"
+            [ -s \"\$NVM_DIR/nvm.sh\" ] && \. \"\$NVM_DIR/nvm.sh\"
+
+            echo \"✅ Current Node version: \$(node -v || echo not found)\"
+            echo \"✅ Current npm version: \$(npm -v || echo not found)\"
+            echo \"✅ Current pm2 version: \$(pm2 -v || echo not found)\"
+
+            echo \"📦 Pulling latest changes...\"
+            git checkout ${GITHUB_REF##*/}
+            git pull origin ${GITHUB_REF##*/}
+
+            echo \"📥 Installing dependencies...\"
+            npm install
+
+            echo \"🏗️ Building project...\"
+            npm run build
+
+            echo \"🚀 Restarting app with PM2...\"
+            pm2 stop nextjs-app || true
+            pm2 start npm --name \"nextjs-app\" -- run start -- -p 3000
+          '"
