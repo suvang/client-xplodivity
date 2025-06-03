@@ -16,8 +16,7 @@ const RefundPolicy = () => {
             <h2 className="text-xl font-semibold">Course Assignment Issue</h2>
             <p className="text-gray-300">
               If the course you purchased has not been assigned to your account
-              within 10 days from the date of purchase, and you are still within
-              the course's validity or expiration period, you are entitled to
+              within 10 days from the date of purchase, you are entitled to
               request a refund.
             </p>
           </div>
@@ -31,7 +30,12 @@ const RefundPolicy = () => {
           </div>
         </div>
 
-        <div className="mt-4 p-4 bg-gray-800/50 rounded-lg">
+        <div className="mt-4 p-4 bg-gray-800/50 rounded-lg flex flex-col gap-4">
+          <p className="text-gray-300">
+            Once your refund request is approved, the refund will be processed
+            to your original mode of payment within 5–7 business days.
+          </p>
+
           <p className="text-gray-300">
             Please note that outside of these two scenarios, no refund requests
             will be entertained. This is due to the nature of the product being
