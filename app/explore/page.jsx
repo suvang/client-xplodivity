@@ -22,8 +22,6 @@ const Explore = ({ params }) => {
   } = useGetAllCategoriesQuery({
     query: "",
     page: currentPage,
-    filter: "",
-    type: "allcategory",
   });
   const [savePost] = useSavePostMutation();
   const pathname = usePathname();
@@ -64,7 +62,7 @@ const Explore = ({ params }) => {
             {data?.data?.map((item) => (
               <Link href={`/explore/${item.blogUrl}`}>
                 <Card
-                  image={item.image}
+                  image={item.descriptionImages[0]}
                   title={item.topicName}
                   tags={item.tags}
                   id={item._id}

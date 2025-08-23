@@ -82,7 +82,7 @@ const LatestContent = () => {
         >
           <div className="h-48 overflow-hidden relative">
             <img
-              src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/uploads/categories/CaShN6mCJB0/2024-08-11T13-13-16.898Z.jpeg`}
+              src={`https://d1ty23sn1lw3wk.cloudfront.net/blogs/development/8-React-Js-performance-optimization-techniques-YOU-HAVE-TO-KNOW!-20250823/video-2025-08-23T11-37-01.583Z.jpeg`}
               alt="JavaScript code on screen"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />

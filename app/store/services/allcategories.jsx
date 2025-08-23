@@ -5,13 +5,12 @@ import api from "./api";
 export const allcategoriesApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllCategories: builder.query({
-      query: ({ query, page, filter, type }) => {
+      query: ({ query, page, type }) => {
         return {
           url: "/allcategories",
           params: {
             topicName: query === "" ? undefined : query,
             page,
-            filter,
             type,
           },
         };
