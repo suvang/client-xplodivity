@@ -87,8 +87,6 @@ const CoursePreview = () => {
           razorpay_signature: razorpay_signature,
         });
 
-        console.log("verifyPayment", data.data);
-
         // if data is true, then invalidate user details/refetch user details
 
         if (data.data.success) {
