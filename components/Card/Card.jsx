@@ -51,13 +51,15 @@ const Card = ({ image, title, tags, savePost, id, categoryType }) => {
     <div
       className={`w-full max-w-[400px] md:w-[380px] rounded-lg h-fit md:h-[350px] bg-custom-card-bg `}
     >
-      <Image
-        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${image}`}
-        alt="logo"
-        width={384}
-        height={100}
-        className={`object-contain rounded-t-lg md:${styles.image} w-full`}
-      />
+      {image && (
+        <img
+          src={`https://${image}`}
+          alt="logo"
+          width={384}
+          height={100}
+          className={`object-contain rounded-t-lg md:${styles.image} w-full`}
+        />
+      )}
 
       <div className="py-2 px-3 flex-start flex-col gap-3.5">
         <h1 className="break-words text-base font-medium line-clamp-2">
