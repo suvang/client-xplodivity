@@ -14,8 +14,6 @@ const SearchQuerypage = ({ params }) => {
   } = useGetAllCategoriesQuery({
     query: params.query,
     page: 1,
-    filter: "",
-    type: "image",
   });
 
   return (
@@ -38,7 +36,7 @@ const SearchQuerypage = ({ params }) => {
             data?.data?.map((item) => (
               <Link href={`/explore/${item.blogUrl}`}>
                 <Card
-                  image={item.image}
+                  image={item.descriptionImages[0]}
                   title={item.topicName}
                   tags={item.tags}
                 />

@@ -22,8 +22,6 @@ const Explore = ({ params }) => {
   } = useGetAllCategoriesQuery({
     query: "",
     page: currentPage,
-    filter: "",
-    type: "allcategory",
   });
   const [savePost] = useSavePostMutation();
   const pathname = usePathname();

@@ -15,7 +15,8 @@ async function getData(name) {
 }
 
 const TopicPage = async ({ params }) => {
-  const data = await getData(`${params.topic[0]}/${params.topic[1]}`);
+  const data = await getData(`${params.topic[0]}`);
+
   const Category = data.data[0];
 
   return (
