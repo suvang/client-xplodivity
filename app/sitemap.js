@@ -1,3 +1,4 @@
+//This will auto generate sitemap.xml in next js 14
 export default async function sitemap() {
   const baseUrl = process.env.NEXTAUTH_URL;
 
