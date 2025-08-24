@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -12,10 +13,15 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="h-10 w-10 rounded-full bg-gradient-to-r from-[#3B82F6] to-[#4F46E5] flex items-center justify-center">
-                <span className="text-xl font-bold text-white">X</span>
-              </div>
-              <span className="text-xl font-bold text-white">Xplodivity</span>
+              <Image
+                src="/favicon.ico"
+                alt="logo"
+                width={30}
+                height={30}
+                className="object-contain"
+              />
+
+              <span className="text-xl font-bold text-white">xplodivity</span>
             </Link>
             <p className="text-white/70 text-sm">
               Exploding Creativity. Engineering knowledge for the modern

@@ -9,8 +9,39 @@ import { NextUIProvider } from "@nextui-org/system";
 import Auth from "@components/Auth";
 
 export const metadata = {
-  title: "xplodivity",
-  description: "JavaScript made easy",
+  title: "xplodivity - Tech Articles & Courses",
+  description:
+    "Learn JavaScript, web development, and modern frontend engineering at xplodivity.",
+  keywords: [
+    "JavaScript",
+    "Frontend",
+    "Web Development",
+    "xplodivity",
+    "software engineering",
+  ],
+  openGraph: {
+    title: "xplodivity",
+    description: "Learn JS, frontend system design, and more.",
+    url: "https://xplodivity.com",
+    siteName: "xplodivity",
+    images: [
+      {
+        url: "/favicon.ico", // place this in public/
+        width: 1200,
+        height: 630,
+      },
+    ],
+    videos: [
+      {
+        url: "https://www.youtube.com/@xplodivity/videos", // 🔗 YouTube video link
+        width: 1280,
+        height: 720,
+        type: "text/html",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export const viewport = {

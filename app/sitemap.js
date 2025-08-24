@@ -65,20 +65,14 @@ export default async function sitemap() {
   try {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-    console.log("articleapiBaseUrl", apiBaseUrl);
-
     if (apiBaseUrl) {
       // Fetch all categories/articles (you might need to adjust this based on your API)
       const articlesResponse = await fetch(
         `${apiBaseUrl}/api/v1/allcategories?page=1`
       );
 
-      console.log("articlesResponse", articlesResponse);
-
       if (articlesResponse.ok) {
         const articlesData = await articlesResponse.json();
-
-        console.log("articlesData", articlesData);
 
         if (articlesData.data && Array.isArray(articlesData.data)) {
           articlePages = articlesData.data.map((article) => {
@@ -103,18 +97,12 @@ export default async function sitemap() {
   try {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-    console.log("course apiBaseUrl", apiBaseUrl);
-
     if (apiBaseUrl) {
       // Fetch all courses
       const coursesResponse = await fetch(`${apiBaseUrl}/api/v1/course`);
 
-      console.log("coursesResponse", coursesResponse);
-
       if (coursesResponse.ok) {
         const coursesData = await coursesResponse.json();
-
-        console.log("coursesData", coursesData);
 
         if (coursesData && Array.isArray(coursesData)) {
           coursePages = coursesData.map((course) => {
@@ -137,8 +125,6 @@ export default async function sitemap() {
   } catch (error) {
     console.warn("Could not fetch courses for sitemap:", error.message);
   }
-
-  console.log({ articlePages, coursePages });
 
   // Combine all pages
   return [...staticPages, ...articlePages, ...coursePages];

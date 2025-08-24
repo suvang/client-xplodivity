@@ -4,7 +4,7 @@ export default function AboutUs() {
   return (
     <section className="py-16 px-8 pt-28 pb-20">
       <div className="max-w-4xl mx-auto text-center">
-        <h1 className="text-4xl font-extrabold mb-6">Welcome to Xplodivity</h1>
+        <h1 className="text-4xl font-extrabold mb-6">Welcome to xplodivity</h1>
         <p className="text-lg leading-relaxed mb-8">
           Your go-to destination for mastering programming, web development, and
           JavaScript.
@@ -37,7 +37,7 @@ export default function AboutUs() {
         </div>
         <p className="text-lg mt-12">
           Join our growing community of developers and take the next step in
-          your programming journey with Xplodivity.
+          your programming journey with xplodivity.
         </p>
       </div>
     </section>
