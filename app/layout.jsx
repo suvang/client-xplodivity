@@ -8,10 +8,13 @@ import Footer from "@components/Footer";
 import { NextUIProvider } from "@nextui-org/system";
 import Auth from "@components/Auth";
 
+const baseUrl = process.env.NEXTAUTH_URL || "";
+const cloudfrontUrl = process.env.NEXT_PUBLIC_CLOUDFRONT_URL || "";
+
 export const metadata = {
   title: "xplodivity - Tech Articles & Courses",
   description:
-    "Learn JavaScript, web development, and modern frontend engineering at xplodivity.",
+    "Get started with your coding journey at xplodivity. Free tech articles, tech news, courses, and tutorials for developers.",
   keywords: [
     "JavaScript",
     "Frontend",
@@ -19,14 +22,18 @@ export const metadata = {
     "xplodivity",
     "software engineering",
   ],
+  icons: {
+    icon: `${cloudfrontUrl}/assets/favicon.ico`,
+  },
   openGraph: {
-    title: "xplodivity",
-    description: "Learn JS, frontend system design, and more.",
-    url: "https://xplodivity.com",
+    title: "xplodivity - Tech Articles & Courses",
+    description:
+      "Get started with your coding journey at xplodivity. Free tech articles, tech news, courses, and tutorials for developers.",
+    url: baseUrl || undefined,
     siteName: "xplodivity",
     images: [
       {
-        url: "/favicon.ico", // place this in public/
+        url: `${cloudfrontUrl}/assets/og-image.png`,
         width: 1200,
         height: 630,
       },
