@@ -59,7 +59,7 @@ export async function generateMetadata({ params }) {
   const canonicalPath = `/explore/${params.topic.join("/")}`;
   const ogImageUrl =
     category.descriptionImages?.[0] != null
-      ? toAbsoluteImageUrl(category.descriptionImages[0])
+      ? `https://${category.descriptionImages[0]}`
       : cloudfrontUrl
       ? `${cloudfrontUrl}/assets/og-image.png`
       : baseUrl
