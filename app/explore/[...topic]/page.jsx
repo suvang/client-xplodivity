@@ -29,15 +29,6 @@ function stripMarkdownForDescription(text) {
   return cleaned.slice(0, 497).trim() + "...";
 }
 
-function toAbsoluteImageUrl(url) {
-  if (!url) return null;
-  if (url.startsWith("http://") || url.startsWith("https://")) return url;
-  const base = cloudfrontUrl || baseUrl;
-  return base
-    ? `${base.replace(/\/$/, "")}${url.startsWith("/") ? url : `/${url}`}`
-    : url;
-}
-
 export async function generateMetadata({ params }) {
   const blogUrl = params?.topic?.[0];
   if (!blogUrl) return { title: "Article | xplodivity" };
