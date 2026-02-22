@@ -2,6 +2,9 @@ import Link from "next/link";
 import Mdxtest from "./mdxtest";
 import styles from "./styles.module.css";
 
+const baseUrl = process.env.NEXTAUTH_URL || "";
+const cloudfrontUrl = process.env.NEXT_PUBLIC_CLOUDFRONT_URL || "";
+
 async function getData(name) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/allcategories?blogUrl=${name}`
@@ -12,6 +15,85 @@ async function getData(name) {
   }
 
   return res.json();
+}
+
+function stripMarkdownForDescription(text) {
+  if (!text || typeof text !== "string") return "";
+  const cleaned = text
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/[#*_~`]/g, "")
+    .replace(/\n+/g, " ")
+    .trim();
+  if (cleaned.length <= 500) return cleaned;
+  return cleaned.slice(0, 497).trim() + "...";
+}
+
+function toAbsoluteImageUrl(url) {
+  if (!url) return null;
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  const base = cloudfrontUrl || baseUrl;
+  return base
+    ? `${base.replace(/\/$/, "")}${url.startsWith("/") ? url : `/${url}`}`
+    : url;
+}
+
+export async function generateMetadata({ params }) {
+  const blogUrl = params?.topic?.[0];
+  if (!blogUrl) return { title: "Article | xplodivity" };
+
+  let data;
+  try {
+    data = await getData(blogUrl);
+  } catch {
+    return { title: "Article | xplodivity" };
+  }
+
+  const category = data?.data?.[0];
+  if (!category) return { title: "Article | xplodivity" };
+
+  const title = `${category.topicName} | xplodivity`;
+  const description =
+    stripMarkdownForDescription(category.description) ||
+    `Learn about ${category.topicName} at xplodivity - tech articles and courses for developers.`;
+  const canonicalPath = `/explore/${params.topic.join("/")}`;
+  const ogImageUrl =
+    category.descriptionImages?.[0] != null
+      ? toAbsoluteImageUrl(category.descriptionImages[0])
+      : cloudfrontUrl
+      ? `${cloudfrontUrl}/assets/og-image.png`
+      : baseUrl
+      ? `${baseUrl}/og-image.png`
+      : "/og-image.png";
+
+  return {
+    title,
+    description,
+    alternates: baseUrl
+      ? { canonical: `${baseUrl}${canonicalPath}` }
+      : undefined,
+    openGraph: {
+      title,
+      description,
+      url: baseUrl ? `${baseUrl}${canonicalPath}` : undefined,
+      siteName: "xplodivity",
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: category.topicName,
+        },
+      ],
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ogImageUrl ? [ogImageUrl] : undefined,
+    },
+  };
 }
 
 const TopicPage = async ({ params }) => {
