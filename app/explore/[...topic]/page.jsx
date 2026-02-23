@@ -20,11 +20,27 @@ async function getData(name) {
 function stripMarkdownForDescription(text) {
   if (!text || typeof text !== "string") return "";
   const cleaned = text
+    // remove fenced code blocks
     .replace(/```[\s\S]*?```/g, "")
+    // remove HTML tags
+    .replace(/<\/?[^>]+(>|$)/g, "")
+    // unwrap markdown links [text](url) -> text
     .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    // remove common markdown formatting characters
     .replace(/[#*_~`]/g, "")
-    .replace(/\n+/g, " ")
-    .trim();
+    // collapse whitespace/newlines
+    .replace(/\s+/g, " ")
+    .trim()
+    // decode HTML entities so e.g. &#x27; -> '
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex) =>
+      String.fromCharCode(parseInt(hex, 16))
+    )
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCharCode(parseInt(dec, 10)))
+    .replace(/&apos;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">");
   if (cleaned.length <= 500) return cleaned;
   return cleaned.slice(0, 497).trim() + "...";
 }
