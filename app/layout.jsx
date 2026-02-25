@@ -25,35 +25,35 @@ export const metadata = {
   icons: {
     icon: [
       {
-        url: `${cloudfrontUrl}/assets/favicon.ico`,
+        url: "/images/favicon.ico",
       },
       {
-        url: `${cloudfrontUrl}/assets/favicon-16x16.png`,
+        url: "/images/favicon-16x16.png",
         sizes: "16x16",
         type: "image/png",
       },
       {
-        url: `${cloudfrontUrl}/assets/favicon-32x32.png`,
+        url: "/images/favicon-32x32.png",
         sizes: "32x32",
         type: "image/png",
       },
       {
-        url: `${cloudfrontUrl}/assets/favicon-48x48.png`,
+        url: "/images/favicon-48x48.png",
         sizes: "48x48",
         type: "image/png",
       },
       {
-        url: `${cloudfrontUrl}/assets/android-chrome-192x192.png`,
+        url: "/images/android-chrome-192x192.png",
         sizes: "192x192",
         type: "image/png",
       },
       {
-        url: `${cloudfrontUrl}/assets/android-chrome-512x512.png`,
+        url: "/images/android-chrome-512x512.png",
         sizes: "512x512",
         type: "image/png",
       },
     ],
-    shortcut: `${cloudfrontUrl}/assets/favicon.ico`,
+    shortcut: "/images/favicon.ico",
   },
   openGraph: {
     title: "xplodivity - Tech Articles & Courses",
@@ -79,7 +79,7 @@ export const metadata = {
     locale: "en_US",
     type: "website",
   },
-  manifest: `/site.webmanifest`,
+  manifest: "/site.webmanifest",
 };
 
 export const viewport = {

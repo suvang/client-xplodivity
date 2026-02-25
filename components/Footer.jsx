@@ -14,7 +14,7 @@ const Footer = () => {
           <div className="col-span-1 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <Image
-                src="/favicon.ico"
+                src="/images/favicon.ico"
                 alt="logo"
                 width={30}
                 height={30}
