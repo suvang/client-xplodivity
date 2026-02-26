@@ -44,7 +44,7 @@ const Nav = () => {
             whileTap={{ scale: 0.95 }}
           >
             <Image
-              src="/favicon.ico"
+              src="/favicon-48x48.png"
               alt="logo"
               width={30}
               height={30}
