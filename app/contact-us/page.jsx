@@ -1,5 +1,16 @@
 import React from "react";
 
+export const metadata = {
+  title: "Contact Us",
+  description:
+    "Get in touch with xplodivity. Have questions about our tech articles or courses? Reach out at xplodivity.mail@gmail.com or visit us in Bangalore, India.",
+  openGraph: {
+    title: "Contact xplodivity",
+    description: "Contact the xplodivity team for questions about tech articles or courses.",
+    type: "website",
+  },
+};
+
 const ContactUs = () => {
   return (
     <div className="flex flex-col gap-6 p-8 pt-28 pb-20 max-w-4xl mx-auto">

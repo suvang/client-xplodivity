@@ -1,5 +1,12 @@
 import React from "react";
 
+export const metadata = {
+  title: "Refund Policy",
+  description:
+    "xplodivity Refund and Cancellation Policy - Learn about eligibility for refunds on course purchases, duplicate payments, and technical issues.",
+  robots: { index: true, follow: true },
+};
+
 const RefundPolicy = () => {
   return (
     <div className="flex flex-col gap-6 p-8 pt-28 pb-20 max-w-4xl mx-auto">

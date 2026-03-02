@@ -79,6 +79,7 @@ export async function generateMetadata({ params }) {
     alternates: baseUrl
       ? { canonical: `${baseUrl}${canonicalPath}` }
       : undefined,
+    metadataBase: new URL(baseUrl || "https://xplodivity.com"),
     openGraph: {
       title,
       description,
@@ -105,11 +106,49 @@ export async function generateMetadata({ params }) {
 
 const TopicPage = async ({ params }) => {
   const data = await getData(`${params.topic[0]}`);
-
   const Category = data.data[0];
+  const baseUrl = process.env.NEXTAUTH_URL || "https://xplodivity.com";
+  const canonicalPath = `/explore/${params.topic.join("/")}`;
+  const articleUrl = `${baseUrl}${canonicalPath}`;
+  const ogImageUrl =
+    Category?.descriptionImages?.[0] != null
+      ? `https://${Category.descriptionImages[0]}`
+      : `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL || baseUrl}/assets/og-image.png`;
+
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: Category?.topicName,
+    description: stripMarkdownForDescription(Category?.description)?.slice(0, 160) || `Learn about ${Category?.topicName} at xplodivity.`,
+    image: ogImageUrl,
+    url: articleUrl,
+    datePublished: Category?.createdAt || new Date().toISOString(),
+    dateModified: Category?.updatedAt || Category?.createdAt || new Date().toISOString(),
+    author: {
+      "@type": "Organization",
+      name: "xplodivity",
+      url: baseUrl,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "xplodivity",
+      logo: {
+        "@type": "ImageObject",
+        url: `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL || baseUrl}/assets/android-chrome-512x512.png`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": articleUrl,
+    },
+  };
 
   return (
     <div className="w-full flex gap-8 px-4 md:px-8 pt-24 pb-14">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <div className="flex-start flex-col gap-8 w-[90vw] max-lg:w-full">
         <div className={`w-full ${styles.videoContainer}`}>
           <iframe
@@ -130,10 +169,10 @@ const TopicPage = async ({ params }) => {
         </article>
       </div>
 
-      <div className="flex items-center flex-col gap-3 w-1/5 max-lg:hidden">
-        <h1 className="text-lg text-center font-bold">
+      <nav className="flex items-center flex-col gap-3 w-1/5 max-lg:hidden" aria-label="Table of contents">
+        <h2 className="text-lg text-center font-bold">
           TABLE OF <br /> CONTENTS
-        </h1>
+        </h2>
         {Category?.headings?.map((heading) => {
           return (
             <Link
@@ -146,7 +185,7 @@ const TopicPage = async ({ params }) => {
             </Link>
           );
         })}
-      </div>
+      </nav>
     </div>
   );
 };

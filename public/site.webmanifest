@@ -1,6 +1,7 @@
 {
-  "name": "xplodivity",
+  "name": "xplodivity - Tech Articles & Courses",
   "short_name": "xplodivity",
+  "description": "Free tech articles, courses, and tutorials for developers. Learn JavaScript, React, Web Development, AI, and more.",
   "icons": [
     {
       "src": "https://d1ty23sn1lw3wk.cloudfront.net/assets/favicon-16x16.png",

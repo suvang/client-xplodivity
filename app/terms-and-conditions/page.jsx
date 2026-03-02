@@ -1,5 +1,12 @@
 import React from "react";
 
+export const metadata = {
+  title: "Terms and Conditions",
+  description:
+    "Terms of Use for xplodivity - Read the terms and conditions for using our tech articles, courses, and platform services.",
+  robots: { index: true, follow: true },
+};
+
 const TermsAndConditions = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 prose prose-slate pt-28 pb-20">

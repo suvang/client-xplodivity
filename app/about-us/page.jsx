@@ -1,5 +1,17 @@
 import React from "react";
 
+export const metadata = {
+  title: "About Us",
+  description:
+    "Learn about xplodivity - your go-to destination for mastering programming, web development, and JavaScript. In-depth tutorials and project-based learning for developers at all levels.",
+  openGraph: {
+    title: "About xplodivity | Tech Education for Developers",
+    description:
+      "Demystifying complex coding concepts with accessible, engaging tutorials. Join our community of developers.",
+    type: "website",
+  },
+};
+
 export default function AboutUs() {
   return (
     <section className="py-16 px-8 pt-28 pb-20">

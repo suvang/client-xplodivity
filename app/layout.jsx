@@ -2,7 +2,6 @@ import Nav from "@components/Nav";
 import "@styles/globals.css";
 import { Providers } from "./store/provider";
 import { Poppins } from "next/font/google";
-import { headers } from "next/headers";
 import { NextAuthProvider } from "@components/NextAuthProvider";
 import Footer from "@components/Footer";
 import { NextUIProvider } from "@nextui-org/system";
@@ -12,16 +11,61 @@ const baseUrl = process.env.NEXTAUTH_URL || "";
 const cloudfrontUrl = process.env.NEXT_PUBLIC_CLOUDFRONT_URL || "";
 
 export const metadata = {
-  title: "xplodivity - Tech Articles & Courses",
+  metadataBase: new URL(process.env.NEXTAUTH_URL || "https://xplodivity.com"),
+  title: {
+    default: "xplodivity - Tech Articles & Courses for Developers",
+    template: "%s | xplodivity",
+  },
   description:
-    "Get started with your coding journey at xplodivity. Free tech articles, tech news, courses, and tutorials for developers.",
+    "Get started with your coding journey at xplodivity. Free tech articles, tech news, courses, and tutorials for developers. Learn JavaScript, React, Web Development, AI, and more.",
   keywords: [
     "JavaScript",
-    "Frontend",
+    "React",
+    "Frontend Development",
     "Web Development",
     "xplodivity",
     "software engineering",
+    "programming tutorials",
+    "tech courses",
+    "coding tutorials",
+    "fullstack development",
+    "AI tutorials",
+    "Tech news",
+    "Tech articles",
+    "Tech tutorials",
+    "Tech courses",
+    "Tech development",
+    "Tech programming",
+    "Tech coding",
+    "Tech software",
+    "Tech engineering",
+    "Coding",
+    "programming",
+    "programming tutorials",
+    "programming courses",
+    "programming tutorials",
   ],
+  authors: [{ name: "xplodivity", url: "https://xplodivity.com" }],
+  creator: "xplodivity",
+  publisher: "xplodivity",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "xplodivity - Tech Articles & Courses for Developers",
+    description:
+      "Free tech articles, tech news, courses, and tutorials for developers. Learn JavaScript, React, Web Development, AI, and more.",
+    site: "@xplodivity",
+  },
   icons: {
     icon: [
       {
@@ -94,12 +138,52 @@ const poppins = Poppins({
   display: "swap",
 });
 
-const RootLayout = ({ children }, request) => {
-  const headersList = headers();
+const siteUrl = process.env.NEXTAUTH_URL || "https://xplodivity.com";
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      name: "xplodivity",
+      url: siteUrl,
+      logo: {
+        "@type": "ImageObject",
+        url: `${
+          process.env.NEXT_PUBLIC_CLOUDFRONT_URL || siteUrl
+        }/assets/android-chrome-512x512.png`,
+      },
+      sameAs: ["https://www.youtube.com/@xplodivity"],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      url: siteUrl,
+      name: "xplodivity - Tech Articles & Courses",
+      description:
+        "Free tech articles, tech news, courses, and tutorials for developers. Learn JavaScript, React, Web Development, AI, and more.",
+      publisher: { "@id": `${siteUrl}/#organization` },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${siteUrl}/search/{search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ],
+};
+
+const RootLayout = ({ children }) => {
   return (
     <html lang="en" className={poppins.className}>
       <body className="bg-custom-background">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <NextAuthProvider>
           <Providers>
             <NextUIProvider>

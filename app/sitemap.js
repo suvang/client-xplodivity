@@ -1,17 +1,11 @@
-//This will auto generate sitemap.xml in next js 14
+// This will auto generate sitemap.xml in Next.js 14
 export default async function sitemap() {
-  const baseUrl = process.env.NEXTAUTH_URL;
+  const baseUrl = process.env.NEXTAUTH_URL || "https://xplodivity.com";
 
-  // Static pages
+  // Static pages (single home page entry - no duplicate)
   const staticPages = [
     {
       url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/`,
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 1.0,
@@ -82,10 +76,10 @@ export default async function sitemap() {
 
         if (articlesData.data && Array.isArray(articlesData.data)) {
           articlePages = articlesData.data.map((article) => {
-            // Safely encode the blogUrl to handle special characters
-            const safeBlogUrl = encodeURIComponent(article.blogUrl || "");
+            // Use blogUrl directly - it's a URL-safe slug from the API
+            const blogUrl = article.blogUrl || "";
             return {
-              url: `${baseUrl}/explore/${safeBlogUrl}`,
+              url: `${baseUrl}/explore/${blogUrl}`,
               lastModified: new Date(article.createdAt),
               changeFrequency: "weekly",
               priority: 0.8,
@@ -112,12 +106,10 @@ export default async function sitemap() {
 
         if (coursesData && Array.isArray(coursesData)) {
           coursePages = coursesData.map((course) => {
-            // Safely encode the course URL to handle special characters
-            const safeCourseUrl = encodeURIComponent(
-              course.url || course._id || ""
-            );
+            // Use course URL slug directly
+            const courseSlug = course.url || course._id || "";
             return {
-              url: `${baseUrl}/courses/${safeCourseUrl}`,
+              url: `${baseUrl}/courses/${courseSlug}`,
               lastModified: new Date(
                 course.updatedAt || course.createdAt || Date.now()
               ),
