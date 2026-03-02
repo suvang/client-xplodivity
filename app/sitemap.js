@@ -76,10 +76,9 @@ export default async function sitemap() {
 
         if (articlesData.data && Array.isArray(articlesData.data)) {
           articlePages = articlesData.data.map((article) => {
-            // Use blogUrl directly - it's a URL-safe slug from the API
-            const blogUrl = article.blogUrl || "";
+            const safeBlogUrl = encodeURIComponent(article.blogUrl || "");
             return {
-              url: `${baseUrl}/explore/${blogUrl}`,
+              url: `${baseUrl}/explore/${safeBlogUrl}`,
               lastModified: new Date(article.createdAt),
               changeFrequency: "weekly",
               priority: 0.8,
@@ -106,10 +105,11 @@ export default async function sitemap() {
 
         if (coursesData && Array.isArray(coursesData)) {
           coursePages = coursesData.map((course) => {
-            // Use course URL slug directly
-            const courseSlug = course.url || course._id || "";
+            const safeCourseSlug = encodeURIComponent(
+              course.url || course._id || ""
+            );
             return {
-              url: `${baseUrl}/courses/${courseSlug}`,
+              url: `${baseUrl}/courses/${safeCourseSlug}`,
               lastModified: new Date(
                 course.updatedAt || course.createdAt || Date.now()
               ),
