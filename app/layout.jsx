@@ -69,7 +69,7 @@ export const metadata = {
   icons: {
     icon: [
       {
-        url: "/favicon-48x48.png",
+        url: "/favicon.ico",
       },
       {
         url: "/favicon-16x16.png",
@@ -102,7 +102,7 @@ export const metadata = {
         type: "image/png",
       },
     ],
-    shortcut: "/favicon-48x48.png",
+    shortcut: "/favicon.ico",
   },
   openGraph: {
     title: "xplodivity - Tech Articles & Courses",
