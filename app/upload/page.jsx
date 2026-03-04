@@ -146,7 +146,7 @@ const Upload = () => {
   };
 
   return (
-    <div className="flex-center flex-col gap-5">
+    <div className="flex-center flex-col gap-5 pt-28 pb-20">
       <div>
         <h1 className="text-3xl mb-3">Choose category</h1>
 

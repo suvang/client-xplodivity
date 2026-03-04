@@ -6,6 +6,7 @@ import { NextAuthProvider } from "@components/NextAuthProvider";
 import Footer from "@components/Footer";
 import { NextUIProvider } from "@nextui-org/system";
 import Auth from "@components/Auth";
+import { Suspense } from "react";
 
 const baseUrl = process.env.NEXTAUTH_URL || "";
 const cloudfrontUrl = process.env.NEXT_PUBLIC_CLOUDFRONT_URL || "";
@@ -192,7 +193,9 @@ const RootLayout = ({ children }) => {
         <NextAuthProvider>
           <Providers>
             <NextUIProvider>
-              <Auth />
+              <Suspense fallback={<div>Loading...</div>}>
+                <Auth />
+              </Suspense>
               <main className="app">
                 <Nav />
                 <div className="w-full flex flex-col grow">{children}</div>
