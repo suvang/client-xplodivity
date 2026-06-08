@@ -1,4 +1,82 @@
+.media {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
 .image {
-  width: 380px;
-  height: 220px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1f2437 0%, #2a3150 50%, #1f2437 100%);
+}
+
+.placeholderText {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  height: 360px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .card {
+    width: 380px;
+  }
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.tagsScroll {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  width: 100%;
+  min-width: 0;
+  margin-top: auto;
+  padding-bottom: 0.125rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+.tagsScroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.tagsScroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 9999px;
+}
+
+.tag {
+  flex-shrink: 0;
+  white-space: nowrap;
 }

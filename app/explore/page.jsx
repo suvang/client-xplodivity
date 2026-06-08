@@ -62,7 +62,7 @@ const Explore = ({ params }) => {
             {data?.data?.map((item) => (
               <Link href={`/explore/${item.blogUrl}`}>
                 <Card
-                  image={item.descriptionImages[0]}
+                  image={item.descriptionImages?.[0]}
                   title={item.topicName}
                   tags={item.tags}
                   id={item._id}
