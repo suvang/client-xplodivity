@@ -1,5 +1,6 @@
 import Link from "next/link";
-import Mdxtest from "./mdxtest";
+import ArticleContent from "./ArticleContent";
+import HighlightCode from "./HighlightCode";
 import styles from "./styles.module.css";
 
 const baseUrl = process.env.NEXTAUTH_URL || "";
@@ -43,6 +44,18 @@ function stripMarkdownForDescription(text) {
     .replace(/&gt;/g, ">");
   if (cleaned.length <= 500) return cleaned;
   return cleaned.slice(0, 497).trim() + "...";
+}
+
+function extractHeadingAnchors(html) {
+  if (!html || typeof html !== "string") return [];
+  const anchors = [];
+  const regex = /<h[23][^>]*\bid="([^"]+)"[^>]*>([\s\S]*?)<\/h[23]>/gi;
+  let match;
+  while ((match = regex.exec(html)) !== null) {
+    const text = match[2].replace(/<[^>]+>/g, "").trim();
+    if (text) anchors.push({ id: match[1], text });
+  }
+  return anchors;
 }
 
 export async function generateMetadata({ params }) {
@@ -115,6 +128,15 @@ const TopicPage = async ({ params }) => {
       ? `https://${Category.descriptionImages[0]}`
       : `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL || baseUrl}/assets/og-image.png`;
 
+  const extractedAnchors = extractHeadingAnchors(Category?.description);
+  const headingAnchors =
+    extractedAnchors.length > 0
+      ? extractedAnchors
+      : Category?.headings?.map((text) => ({
+          id: text.replace(/ /g, "-"),
+          text,
+        })) || [];
+
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -165,7 +187,8 @@ const TopicPage = async ({ params }) => {
         <h1 className="text-3xl font-bold">{Category?.topicName}</h1>
 
         <article className="prose prose-headings:text-custom-text prose-a:text-blue-600 hover:prose-a:text-blue-500 w-full">
-          <Mdxtest source={Category?.description} />
+          <ArticleContent html={Category?.description} />
+          <HighlightCode />
         </article>
       </div>
 
@@ -173,18 +196,15 @@ const TopicPage = async ({ params }) => {
         <h2 className="text-lg text-center font-bold">
           TABLE OF <br /> CONTENTS
         </h2>
-        {Category?.headings?.map((heading) => {
-          return (
-            <Link
-              className={`${styles.heading} bg-custom-button-bg hover:bg-sky-500 text-xl`}
-              href={`/explore/${params.topic[0]}/${
-                params.topic[1]
-              }#${heading.replace(/ /g, "-")}`}
-            >
-              {heading}
-            </Link>
-          );
-        })}
+        {headingAnchors.map(({ id, text }) => (
+          <Link
+            key={id}
+            className={`${styles.heading} bg-custom-button-bg hover:bg-sky-500 text-xl`}
+            href={`/explore/${params.topic[0]}#${id}`}
+          >
+            {text}
+          </Link>
+        ))}
       </nav>
     </div>
   );
