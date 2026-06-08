@@ -1,4 +1,32 @@
 // This will auto generate sitemap.xml in Next.js 14
+export const revalidate = 3600;
+
+// Raw & in slugs is valid in URLs but must be &amp; inside XML <loc> elements.
+function toXmlSafeUrl(url) {
+  return url.replace(/&/g, "&amp;");
+}
+
+async function fetchAllArticles(apiBaseUrl) {
+  const articles = [];
+  let page = 1;
+  let totalPages = 1;
+
+  while (page <= totalPages) {
+    const res = await fetch(
+      `${apiBaseUrl}/api/v1/allcategories?page=${page}`,
+      { cache: "no-store" }
+    );
+    if (!res.ok) break;
+
+    const json = await res.json();
+    if (Array.isArray(json.data)) articles.push(...json.data);
+    totalPages = json.totalPages ?? 1;
+    page += 1;
+  }
+
+  return articles;
+}
+
 export default async function sitemap() {
   const baseUrl = process.env.NEXTAUTH_URL || "https://xplodivity.com";
 
@@ -66,26 +94,16 @@ export default async function sitemap() {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
     if (apiBaseUrl) {
-      // Fetch all categories/articles (you might need to adjust this based on your API)
-      const articlesResponse = await fetch(
-        `${apiBaseUrl}/api/v1/allcategories?page=1`
-      );
+      const articles = await fetchAllArticles(apiBaseUrl);
 
-      if (articlesResponse.ok) {
-        const articlesData = await articlesResponse.json();
-
-        if (articlesData.data && Array.isArray(articlesData.data)) {
-          articlePages = articlesData.data.map((article) => {
-            const safeBlogUrl = encodeURIComponent(article.blogUrl || "");
-            return {
-              url: `${baseUrl}/explore/${safeBlogUrl}`,
-              lastModified: new Date(article.createdAt),
-              changeFrequency: "weekly",
-              priority: 0.8,
-            };
-          });
-        }
-      }
+      articlePages = articles
+        .filter((article) => article.blogUrl)
+        .map((article) => ({
+          url: toXmlSafeUrl(`${baseUrl}/explore/${article.blogUrl}`),
+          lastModified: new Date(article.createdAt),
+          changeFrequency: "weekly",
+          priority: 0.8,
+        }));
     }
   } catch (error) {
     console.warn("Could not fetch articles for sitemap:", error.message);

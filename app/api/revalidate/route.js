@@ -29,11 +29,12 @@ export async function POST(request) {
 
   try {
     revalidatePath("/explore", "layout");
+    revalidatePath("/sitemap.xml");
     return NextResponse.json({
       revalidated: true,
-      path: "/explore",
+      paths: ["/explore", "/sitemap.xml"],
       message:
-        "Article pages revalidated; next request will reflect latest DB data.",
+        "Article pages and sitemap revalidated; next request will reflect latest DB data.",
     });
   } catch (err) {
     console.error("[revalidate]", err);
