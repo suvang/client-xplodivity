@@ -126,7 +126,9 @@ const TopicPage = async ({ params }) => {
   const ogImageUrl =
     Category?.descriptionImages?.[0] != null
       ? `https://${Category.descriptionImages[0]}`
-      : `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL || baseUrl}/assets/og-image.png`;
+      : `${
+          process.env.NEXT_PUBLIC_CLOUDFRONT_URL || baseUrl
+        }/assets/og-image.png`;
 
   const extractedAnchors = extractHeadingAnchors(Category?.description);
   const headingAnchors =
@@ -141,11 +143,14 @@ const TopicPage = async ({ params }) => {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: Category?.topicName,
-    description: stripMarkdownForDescription(Category?.description)?.slice(0, 160) || `Learn about ${Category?.topicName} at xplodivity.`,
+    description:
+      stripMarkdownForDescription(Category?.description)?.slice(0, 160) ||
+      `Learn about ${Category?.topicName} at xplodivity.`,
     image: ogImageUrl,
     url: articleUrl,
     datePublished: Category?.createdAt || new Date().toISOString(),
-    dateModified: Category?.updatedAt || Category?.createdAt || new Date().toISOString(),
+    dateModified:
+      Category?.updatedAt || Category?.createdAt || new Date().toISOString(),
     author: {
       "@type": "Organization",
       name: "xplodivity",
@@ -156,7 +161,9 @@ const TopicPage = async ({ params }) => {
       name: "xplodivity",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL || baseUrl}/assets/android-chrome-512x512.png`,
+        url: `${
+          process.env.NEXT_PUBLIC_CLOUDFRONT_URL || baseUrl
+        }/assets/android-chrome-512x512.png`,
       },
     },
     mainEntityOfPage: {
@@ -172,18 +179,20 @@ const TopicPage = async ({ params }) => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
       <div className="flex-start flex-col gap-8 w-[90vw] max-lg:w-full">
-        <div className={`w-full ${styles.videoContainer}`}>
-          <iframe
-            className="w-full aspect-video"
-            width="100%"
-            height="100%"
-            src={`https://www.youtube.com/embed/${Category?.videoId}`}
-            title={Category?.topicName}
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
-        </div>
+        {Category?.videoId && (
+          <div className={`w-full ${styles.videoContainer}`}>
+            <iframe
+              className="w-full aspect-video"
+              width="100%"
+              height="100%"
+              src={`https://www.youtube.com/embed/${Category?.videoId}`}
+              title={Category?.topicName}
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+        )}
         <h1 className="text-3xl font-bold">{Category?.topicName}</h1>
 
         <article className="prose prose-headings:text-custom-text prose-a:text-blue-600 hover:prose-a:text-blue-500 w-full">
@@ -192,7 +201,10 @@ const TopicPage = async ({ params }) => {
         </article>
       </div>
 
-      <nav className="flex items-center flex-col gap-3 w-1/5 max-lg:hidden" aria-label="Table of contents">
+      <nav
+        className="flex items-center flex-col gap-3 w-1/5 max-lg:hidden"
+        aria-label="Table of contents"
+      >
         <h2 className="text-lg text-center font-bold">
           TABLE OF <br /> CONTENTS
         </h2>
